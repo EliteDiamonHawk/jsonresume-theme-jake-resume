@@ -1,6 +1,6 @@
 # jsonresume-theme-jake-latex
 
-A compact, ATS-friendly JSON Resume theme inspired by Jake Gutierrez's widely used LaTeX resume layout (itself based on the sb2nov resume template).
+A compact, ATS-friendly JSON Resume theme inspired by `Jake's Resume`'s LaTeX resume layout (itself based on the sb2nov resume template).
 
 The theme recreates the main visual traits of the supplied LaTeX source:
 
@@ -88,7 +88,7 @@ It also supports optional display helpers such as `dateText` and `endDateText` s
 
 ## Attribution
 
-Visual design adapted from the supplied LaTeX resume source credited to Jake Gutierrez and based on `sb2nov/resume`. The source states an MIT license.
+Visual design adapted from the supplied LaTeX resume source credited to `jakegut/resume' and based on `sb2nov/resume`. The source states an MIT license.
 
 ## Theme API
 
