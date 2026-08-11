@@ -1,0 +1,158 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json",
+  "meta": { "language": "en" },
+  "basics": {
+    "name": "Maya Chen",
+    "email": "maya.chen@example.com",
+    "phone": "(415) 555-0187",
+    "location": { "city": "Oakland", "region": "CA" },
+    "profiles": [
+      { "network": "LinkedIn", "username": "mayachen", "url": "https://linkedin.com/in/mayachen", "display": "LinkedIn" },
+      { "network": "GitHub", "username": "maya-codes", "url": "https://github.com/maya-codes", "display": "GitHub" },
+      { "network": "Portfolio", "username": "maya.dev", "url": "https://maya.dev", "display": "Portfolio" },
+      { "network": "Kaggle", "username": "mayachen", "url": "https://kaggle.com/mayachen", "display": "Kaggle" }
+    ]
+  },
+  "education": [
+    {
+      "institution": "Pacific State University",
+      "location": { "city": "Berkeley", "region": "CA" },
+      "studyType": "Bachelor of Science",
+      "area": "Computer Science",
+      "startDate": "2022-08-01",
+      "endDate": "2026-05-01",
+      "score": "3.86",
+      "courses": ["Data Structures", "Operating Systems", "Database Systems", "Machine Learning"],
+      "highlights": ["Dean's List: Fall 2023, Spring 2024, Fall 2025"]
+    },
+    {
+      "institution": "North Bay Community College",
+      "location": { "city": "Richmond", "region": "CA" },
+      "studyType": "Certificate",
+      "area": "Digital Design",
+      "startDate": "2021-01-01",
+      "endDate": "2022-05-01",
+      "highlights": ["Completed a 24-unit program covering UI design, typography, and web fundamentals"]
+    }
+  ],
+  "work": [
+    {
+      "name": "Orbit Labs",
+      "position": "Software Engineering Intern",
+      "location": { "city": "San Francisco", "region": "CA" },
+      "startDate": "2025-06-01",
+      "endDate": "2025-09-01",
+      "highlights": [
+        "Built React dashboard components used by an internal operations team to review customer event data.",
+        "Added API validation and error handling to a TypeScript service, reducing malformed requests during testing.",
+        "Wrote unit tests and participated in weekly code reviews with a five-person engineering team."
+      ]
+    },
+    {
+      "name": "Campus Technology Center",
+      "position": "Student IT Assistant",
+      "location": { "city": "Berkeley", "region": "CA" },
+      "startDate": "2023-09-01",
+      "endDateText": "Present",
+      "highlights": [
+        "Troubleshoot classroom computers, projectors, printers, account access, and common network issues.",
+        "Document recurring support problems and maintain setup guides for student employees.",
+        "Assist 20-40 students and faculty members during a typical weekly shift schedule."
+      ]
+    },
+    {
+      "name": "Redwood Community Market",
+      "position": "Shift Associate",
+      "location": { "city": "Oakland", "region": "CA" },
+      "startDate": "2022-05-01",
+      "endDate": "2023-08-01",
+      "highlights": [
+        "Handled checkout, restocking, online pickup orders, and closing procedures in a fast-paced neighborhood store.",
+        "Trained three new team members on register procedures and inventory routines."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Transit Delay Explorer",
+      "roles": ["Developer", "Designer"],
+      "startDate": "2025-10-01",
+      "endDate": "2025-12-01",
+      "highlights": [
+        "Created a web app that visualizes fictional transit delay data by route, station, and hour.",
+        "Used React, Vite, TypeScript, Chart.js, and a small Express API.",
+        "Designed responsive filtering controls and keyboard-accessible navigation."
+      ]
+    },
+    {
+      "name": "Study Buddy CLI",
+      "roles": ["Solo Developer"],
+      "startDate": "2024-03-01",
+      "endDate": "2024-04-01",
+      "highlights": [
+        "Built a Java command-line study tracker with spaced-review reminders, CSV export, and basic statistics.",
+        "Practiced interfaces, collections, exception handling, file I/O, and unit testing."
+      ]
+    }
+  ],
+  "certificates": [
+    {
+      "name": "AWS Certified Cloud Practitioner",
+      "date": "2025-02-01",
+      "issuer": "Amazon Web Services"
+    },
+    {
+      "name": "Google Data Analytics Certificate",
+      "date": "2024-08-01",
+      "issuer": "Google"
+    },
+    {
+      "name": "Adult and Pediatric First Aid/CPR/AED",
+      "date": "2024-01-01",
+      "issuer": "American Red Cross"
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native"
+    },
+    {
+      "language": "Mandarin Chinese",
+      "fluency": "Conversational",
+      "keywords": ["Comfortable with everyday conversation"]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Languages",
+      "keywords": ["Java", "TypeScript", "JavaScript", "Python", "SQL", "HTML", "CSS"]
+    },
+    {
+      "name": "Frameworks & Tools",
+      "keywords": ["React", "Vite", "Node.js", "Express", "Git", "GitHub", "PostgreSQL", "Docker"]
+    },
+    {
+      "name": "Software",
+      "keywords": ["Figma", "Microsoft Excel", "Google Sheets", "Jira", "VS Code"]
+    }
+  ],
+  "activities": [
+    {
+      "organization": "Association for Computing Machinery",
+      "position": "Events Coordinator",
+      "location": { "city": "Berkeley", "region": "CA" },
+      "startDate": "2024-08-01",
+      "endDateText": "Present",
+      "highlights": ["Help organize technical workshops, alumni panels, and beginner-friendly coding events."]
+    },
+    {
+      "organization": "Bay Area Food Collective",
+      "position": "Volunteer",
+      "location": { "city": "Oakland", "region": "CA" },
+      "startDate": "2023-02-01",
+      "endDate": "2024-12-01",
+      "highlights": ["Sorted donations and assembled weekly grocery boxes for community distribution."]
+    }
+  ]
+}

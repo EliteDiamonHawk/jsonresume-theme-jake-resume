@@ -1,0 +1,27 @@
+{
+  "name": "jsonresume-theme-jake-latex",
+  "version": "1.0.0",
+  "description": "A compact, ATS-friendly JSON Resume theme inspired by Jake Gutierrez's LaTeX resume template.",
+  "type": "module",
+  "main": "index.js",
+  "exports": "./index.js",
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "preview": "node scripts/build-preview.mjs",
+    "test": "node scripts/test.mjs"
+  },
+  "keywords": [
+    "jsonresume",
+    "json-resume",
+    "resume",
+    "cv",
+    "theme",
+    "latex",
+    "ats"
+  ],
+  "license": "MIT"
+}

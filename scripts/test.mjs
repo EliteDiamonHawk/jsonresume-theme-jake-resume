@@ -1,0 +1,14 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+import { render } from "../index.js";
+const resume = JSON.parse(fs.readFileSync(new URL("../resume.json", import.meta.url), "utf8"));
+const html = render(resume);
+assert.match(html, /Dylan Huang/);
+assert.match(html, /Education/);
+assert.match(html, /Experience/);
+assert.match(html, /Certifications/);
+assert.match(html, /Skills/);
+assert.match(html, /Activities/);
+assert.match(html, /<style>/);
+assert.ok(html.length > 5000);
+console.log("Theme render test passed");
