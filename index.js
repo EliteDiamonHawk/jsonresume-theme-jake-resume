@@ -810,8 +810,8 @@ function renderHeader(basics = {}) {
 |--------------------------------------------------------------------------
 */
 
-function renderEducation(items = []) {
-  return entrySection("Education", items, item => {
+function renderEducation(items = [], title = "Education") {
+  return entrySection(title, items, item => {
     const notes = [];
 
     if (
@@ -858,12 +858,12 @@ function renderEducation(items = []) {
 
 /*
 |--------------------------------------------------------------------------
-| WORK / EXPERIENCE
+| WORK
 |--------------------------------------------------------------------------
 */
 
-function renderWork(items = []) {
-  return entrySection("Work", items, item =>
+function renderWork(items = [], title = "Work") {
+  return entrySection(title, items, item =>
     roleEntry({
       role:
         item.position ||
@@ -896,8 +896,8 @@ function renderWork(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderVolunteer(items = []) {
-  return entrySection("Volunteer", items, item =>
+function renderVolunteer(items = [], title = "Volunteer") {
+  return entrySection(title, items, item =>
     roleEntry({
       role:
         item.position ||
@@ -936,8 +936,8 @@ function renderVolunteer(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderProjects(items = []) {
-  return entrySection("Projects", items, item => {
+function renderProjects(items = [], title = "Projects") {
+  return entrySection(title, items, item => {
     const extras = [];
 
     if (
@@ -1009,8 +1009,8 @@ function renderProjects(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderAwards(items = []) {
-  return entrySection("Awards", items, item =>
+function renderAwards(items = [], title = "Awards") {
+  return entrySection(title, items, item =>
     creditEntry({
       name:
         item.title,
@@ -1035,8 +1035,8 @@ function renderAwards(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderCertificates(items = []) {
-  return entrySection("Certifications", items, item =>
+function renderCertificates(items = [], title = "Certifications") {
+  return entrySection(title, items, item =>
     creditEntry({
       name:
         item.name,
@@ -1066,8 +1066,8 @@ function renderCertificates(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderPublications(items = []) {
-  return entrySection("Publications", items, item =>
+function renderPublications(items = [], title = "Publications") {
+  return entrySection(title, items, item =>
     creditEntry({
       name:
         item.name,
@@ -1102,8 +1102,8 @@ function renderPublications(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderSkills(items = []) {
-  return labelSection("Skills", items, skill =>
+function renderSkills(items = [], title = "Skills") {
+  return labelSection(title, items, skill =>
     labelLine(
       skill.name || "Skill",
       [
@@ -1125,8 +1125,8 @@ function renderSkills(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderLanguages(items = []) {
-  return labelSection("Languages", items, lang =>
+function renderLanguages(items = [], title = "Languages") {
+  return labelSection(title, items, lang =>
     labelLine(
       lang.language || "Language",
       [
@@ -1146,8 +1146,8 @@ function renderLanguages(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderInterests(items = []) {
-  return labelSection("Interests", items, item =>
+function renderInterests(items = [], title = "Interests") {
+  return labelSection(title, items, item =>
     labelLine(
       item.name || "Interest",
       [
@@ -1165,8 +1165,8 @@ function renderInterests(items = []) {
 |--------------------------------------------------------------------------
 */
 
-function renderReferences(items = []) {
-  return entrySection("References", items, item =>
+function renderReferences(items = [], title = "References") {
+  return entrySection(title, items, item =>
     creditEntry({
       name:
         item.name ||
@@ -1185,56 +1185,110 @@ function renderReferences(items = []) {
   );
 }
 
+
 /*
 |--------------------------------------------------------------------------
-| CUSTOM ACTIVITIES
+| SECTION ORDER AND TITLES
 |--------------------------------------------------------------------------
 |
-| Not part of the standard JSON Resume schema.
+| Every visible section maps a top-level resume key to its renderer.
+| The array order below is the default layout.
 |
-| Example:
+| Both the order and the heading text can be overridden per resume:
 |
-| "activities": [
-|   {
-|     "organization": "University Robotics Club",
-|     "position": "Member",
-|     "startDate": "2025-08-01",
-|     "dateText": "Aug. 2025 -- Present",
-|     "location": {
-|       "city": "San Jose",
-|       "region": "CA"
-|     },
-|     "highlights": []
-|   }
-| ]
+| "meta": {
+|   "order": ["education", "work", "projects", "skills"],
+|   "aliases": { "work": "Experience", "volunteer": "Activities" }
+| }
+|
+| Keys listed in meta.order render first, in that order. Any known
+| section left out is appended afterwards in default order, so a
+| partial list only promotes sections rather than hiding them.
+| Unknown keys and duplicates are ignored.
+|
+| meta.aliases replaces a section's built-in heading. Each renderer
+| keeps its default title as a parameter default, so an alias is
+| simply the title argument being supplied. Aliases for unknown keys,
+| and values that are not a non-empty string, are ignored.
 |
 |--------------------------------------------------------------------------
 */
 
-function renderActivities(items = []) {
-  return entrySection("Activities", items, item =>
-    roleEntry({
-      role:
-        item.position ||
-        item.role ||
-        item.name,
+const SECTIONS = [
+  { key: "education", render: renderEducation },
+  { key: "work", render: renderWork },
+  { key: "volunteer", render: renderVolunteer },
+  { key: "projects", render: renderProjects },
+  { key: "awards", render: renderAwards },
+  { key: "certificates", render: renderCertificates },
+  { key: "publications", render: renderPublications },
+  { key: "skills", render: renderSkills },
+  { key: "languages", render: renderLanguages },
+  { key: "interests", render: renderInterests },
+  { key: "references", render: renderReferences }
+];
 
-      organization:
-        item.organization ||
-        item.name,
-
-      date:
-        dateRange(item),
-
-      location:
-        locationText(
-          item.location
-        ),
-
-      highlights:
-        item.highlights
-    })
+function orderedSectionKeys(order) {
+  const known = new Set(
+    SECTIONS.map(s => s.key)
   );
+
+  const keys = [];
+
+  for (const key of arrayOrEmpty(order)) {
+    if (
+      known.has(key) &&
+      !keys.includes(key)
+    ) {
+      keys.push(key);
+    }
+  }
+
+  for (const { key } of SECTIONS) {
+    if (!keys.includes(key)) {
+      keys.push(key);
+    }
+  }
+
+  return keys;
+}
+
+/*
+ * Resolves the heading for one section.
+ *
+ * Returns undefined when no usable alias
+ * exists, which lets the renderer fall
+ * back to its own default title.
+ */
+function aliasTitle(aliases, key) {
+  const alias =
+    aliases &&
+    typeof aliases === "object"
+      ? aliases[key]
+      : undefined;
+
+  if (typeof alias !== "string") {
+    return undefined;
+  }
+
+  const trimmed = alias.trim();
+
+  return trimmed || undefined;
+}
+
+function renderSections(resume = {}, meta = {}) {
+  const byKey = new Map(
+    SECTIONS.map(s => [s.key, s.render])
+  );
+
+  return orderedSectionKeys(meta.order)
+    .map(key =>
+      byKey.get(key)(
+        resume[key] || [],
+        aliasTitle(meta.aliases, key)
+      )
+    )
+    .join("");
 }
 
 /*
@@ -1300,53 +1354,7 @@ export function render(resume = {}) {
       resume.basics || {}
     ),
 
-    renderEducation(
-      resume.education || []
-    ),
-
-    renderWork(
-      resume.work || []
-    ),
-
-    renderVolunteer(
-      resume.volunteer || []
-    ),
-
-    renderProjects(
-      resume.projects || []
-    ),
-
-    renderAwards(
-      resume.awards || []
-    ),
-
-    renderCertificates(
-      resume.certificates || []
-    ),
-
-    renderPublications(
-      resume.publications || []
-    ),
-
-    renderSkills(
-      resume.skills || []
-    ),
-
-    renderLanguages(
-      resume.languages || []
-    ),
-
-    renderInterests(
-      resume.interests || []
-    ),
-
-    renderActivities(
-      resume.activities || []
-    ),
-
-    renderReferences(
-      resume.references || []
-    )
+    renderSections(resume, meta)
   ].join("");
 
   return `<!doctype html>

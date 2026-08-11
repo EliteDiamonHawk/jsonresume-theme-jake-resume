@@ -58,31 +58,40 @@ For PDF output:
 resume export resume.pdf --theme jsonresume-theme-jake-resume
 ```
 
-## Custom extension: `activities`
+## Section order: `meta.order`
 
-The JSON Resume schema does not currently provide a dedicated membership/activity section with the same fields as work/education. This theme therefore supports an optional top-level `activities` array:
+Section rendering order is controlled by an optional `meta.order` array of top-level resume keys:
 
 ```json
 {
-  "activities": [
-    {
-      "organization": "University Robotics Club",
-      "position": "Project Member",
-      "startDate": "2024-09-01",
-      "dateText": "Sep. 2024 -- Present",
-      "location": { "city": "San Diego", "region": "CA" }
-    },
-    {
-      "organization": "Hackathon Association",
-      "position": "Event Volunteer",
-      "startDate": "2025-02-01",
-      "endDate": "2025-05-01",
-      "dateText": "Feb. 2025 -- May 2025",
-      "location": { "city": "Los Angeles", "region": "CA" }
-    }
-  ]
+  "meta": {
+    "order": ["education", "work", "projects", "skills", "certificates"]
+  }
 }
 ```
+
+Sections listed in `meta.order` render first, in the order given. Any supported section left out is appended afterwards in the theme's default order, so a partial list promotes sections rather than hiding them. Unrecognized keys and duplicates are ignored, and empty sections are omitted as usual. Without `meta.order`, the default order is:
+
+`education`, `work`, `volunteer`, `projects`, `awards`, `certificates`, `publications`, `skills`, `languages`, `interests`, `references`
+
+The header (`basics`) is not part of the ordering and always renders first.
+
+## Section titles: `meta.aliases`
+
+Section headings default to the theme's own wording (`Work`, `Volunteer`, `Certifications`, ...). An optional `meta.aliases` map overrides any of them, keyed by the same top-level resume keys used in `meta.order`:
+
+```json
+{
+  "meta": {
+    "aliases": {
+      "work": "Experience",
+      "volunteer": "Activities"
+    }
+  }
+}
+```
+
+This renames only the heading — the section's data still comes from its standard key, and the layout of its entries is unchanged. Aliases for unrecognized keys, and values that are not a non-empty string, fall back to the default title.
 
 It also supports optional display helpers such as `dateText` and `endDateText` so wording like `(Projected) May 2029` can be reproduced exactly. Unknown/custom properties are simply ignored by other themes that do not support them.
 
