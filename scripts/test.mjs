@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { render } from "../index.js";
 const resume = JSON.parse(fs.readFileSync(new URL("../resume.json", import.meta.url), "utf8"));
 const html = render(resume);
-assert.match(html, /Dylan Huang/);
+assert.match(html, /Maya Chen/);
 assert.match(html, /Education/);
 assert.match(html, /Experience/);
 assert.match(html, /Certifications/);

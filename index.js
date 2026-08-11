@@ -41,18 +41,33 @@ body {
   letter-spacing: 0.2px;
 }
 
+.label {
+  margin: 0 0 3px;
+  font-size: 10pt;
+  font-style: italic;
+}
+
 .contact {
   font-size: 9.4pt;
   line-height: 1.25;
 }
 
-.contact a {
+.contact a,
+.inline-link {
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 1px;
 }
 
-.sep { padding: 0 4px; }
+.sep {
+  padding: 0 4px;
+}
+
+.summary {
+  margin: 5px 0 0;
+  font-size: 9.7pt;
+  text-align: left;
+}
 
 .section {
   margin: 7px 0 0;
@@ -81,7 +96,9 @@ body {
   break-inside: avoid;
 }
 
-.entry:last-child { margin-bottom: 0; }
+.entry:last-child {
+  margin-bottom: 0;
+}
 
 .row {
   display: grid;
@@ -107,7 +124,22 @@ body {
   white-space: nowrap;
 }
 
-.meta-row { margin-top: 1px; }
+.meta-row {
+  margin-top: 1px;
+}
+
+.project-title {
+  min-width: 0;
+  font-size: 9.7pt;
+}
+
+.project-title strong {
+  font-weight: 700;
+}
+
+.project-tech {
+  font-style: italic;
+}
 
 .bullets {
   margin: 3px 0 0 0.21in;
@@ -120,18 +152,28 @@ body {
   font-size: 9.7pt;
 }
 
-.bullets li:last-child { margin-bottom: 0; }
+.bullets li:last-child {
+  margin-bottom: 0;
+}
 
-.skills {
+.compact-lines {
   margin: 1px 0 0;
   padding: 0 0 0 0.15in;
   list-style: none;
   font-size: 9.7pt;
 }
 
-.skill-line { margin: 0 0 3px; }
-.skill-line:last-child { margin-bottom: 0; }
-.skill-label { font-weight: 700; }
+.compact-line {
+  margin: 0 0 3px;
+}
+
+.compact-line:last-child {
+  margin-bottom: 0;
+}
+
+.compact-label {
+  font-weight: 700;
+}
 
 .plain-note {
   margin: 3px 0 0;
@@ -154,8 +196,13 @@ body {
 }
 
 @media print {
-  .resume { max-width: none; }
-  a { color: #000; }
+  .resume {
+    max-width: none;
+  }
+
+  a {
+    color: #000;
+  }
 }
 `;
 
@@ -170,193 +217,1181 @@ function esc(value = "") {
 
 function normalizeUrl(value = "") {
   if (!value) return "";
-  if (/^(https?:|mailto:|tel:)/i.test(value)) return value;
+
+  if (/^(https?:|mailto:|tel:)/i.test(value)) {
+    return value;
+  }
+
   return `https://${value}`;
 }
 
+function link(url, label, className = "inline-link") {
+  if (!url || !label) {
+    return esc(label || "");
+  }
+
+  return `<a class="${esc(className)}" href="${esc(
+    normalizeUrl(url)
+  )}">${esc(label)}</a>`;
+}
+
 function monthYear(value) {
-  if (!value) return "";
+  if (!value) {
+    return "";
+  }
+
   const match = String(value).match(/^(\d{4})-(\d{2})/);
-  if (!match) return String(value);
+
+  if (!match) {
+    return String(value);
+  }
+
   const year = Number(match[1]);
   const month = Number(match[2]);
-  if (month < 1 || month > 12) return String(value);
-  const names = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+
+  if (month < 1 || month > 12) {
+    return String(value);
+  }
+
+  const names = [
+    "Jan.",
+    "Feb.",
+    "Mar.",
+    "Apr.",
+    "May",
+    "Jun.",
+    "Jul.",
+    "Aug.",
+    "Sep.",
+    "Oct.",
+    "Nov.",
+    "Dec."
+  ];
+
   return `${names[month - 1]} ${year}`;
 }
 
+function singleDate(item = {}, field = "date") {
+  const textField = `${field}Text`;
+
+  return item[textField] || monthYear(item[field]);
+}
+
 function dateRange(item = {}) {
-  if (item.dateText) return item.dateText;
-  const start = item.startDateText || monthYear(item.startDate);
-  let end = item.endDateText || monthYear(item.endDate);
-  if (!end && start) end = "Present";
-  return [start, end].filter(Boolean).join(" -- ");
+  if (item.dateText) {
+    return item.dateText;
+  }
+
+  const start =
+    item.startDateText ||
+    monthYear(item.startDate);
+
+  let end =
+    item.endDateText ||
+    monthYear(item.endDate);
+
+  if (!end && start) {
+    end = "Present";
+  }
+
+  return [start, end]
+    .filter(Boolean)
+    .join(" -- ");
 }
 
 function locationText(location = {}) {
-  if (typeof location === "string") return location;
-  return [location.city, location.region].filter(Boolean).join(", ");
+  if (!location) {
+    return "";
+  }
+
+  if (typeof location === "string") {
+    return location;
+  }
+
+  return [
+    location.city,
+    location.region,
+    location.countryCode
+  ]
+    .filter(Boolean)
+    .join(", ");
+}
+
+function arrayOrEmpty(value) {
+  return Array.isArray(value)
+    ? value
+    : [];
 }
 
 function bullets(items = []) {
-  if (!Array.isArray(items) || !items.length) return "";
-  return `<ul class="bullets">${items.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
+  const clean = arrayOrEmpty(items)
+    .filter(Boolean);
+
+  if (!clean.length) {
+    return "";
+  }
+
+  return `
+    <ul class="bullets">
+      ${clean
+        .map(
+          item => `<li>${esc(item)}</li>`
+        )
+        .join("")}
+    </ul>
+  `;
 }
 
-function entry({ title = "", rightTop = "", subtitle = "", rightBottom = "", highlights = [] }) {
+function entry({
+  title = "",
+  titleHtml = "",
+  rightTop = "",
+  subtitle = "",
+  subtitleHtml = "",
+  rightBottom = "",
+  highlights = [],
+  note = ""
+}) {
+  const renderedTitle =
+    titleHtml ||
+    esc(title);
+
+  const renderedSubtitle =
+    subtitleHtml ||
+    esc(subtitle);
+
   return `
     <li class="entry">
+
       <div class="row">
-        <div class="primary">${esc(title)}</div>
-        <div class="right">${esc(rightTop)}</div>
+        <div class="primary">
+          ${renderedTitle}
+        </div>
+
+        <div class="right">
+          ${esc(rightTop)}
+        </div>
       </div>
-      ${(subtitle || rightBottom) ? `<div class="row meta-row">
-        <div class="meta-left">${esc(subtitle)}</div>
-        <div class="meta-right right">${esc(rightBottom)}</div>
-      </div>` : ""}
+
+      ${
+        subtitle ||
+        subtitleHtml ||
+        rightBottom
+          ? `
+            <div class="row meta-row">
+
+              <div class="meta-left">
+                ${renderedSubtitle}
+              </div>
+
+              <div class="meta-right right">
+                ${esc(rightBottom)}
+              </div>
+
+            </div>
+          `
+          : ""
+      }
+
+      ${
+        note
+          ? `<div class="plain-note">${esc(note)}</div>`
+          : ""
+      }
+
       ${bullets(highlights)}
-    </li>`;
+
+    </li>
+  `;
 }
 
 function section(title, body) {
-  if (!body) return "";
-  return `<section class="section"><h2 class="section-title">${esc(title)}</h2>${body}</section>`;
+  if (!body) {
+    return "";
+  }
+
+  return `
+    <section class="section">
+
+      <h2 class="section-title">
+        ${esc(title)}
+      </h2>
+
+      ${body}
+
+    </section>
+  `;
 }
 
-function renderHeader(basics = {}) {
-  const location = locationText(basics.location);
-  const contacts = [];
-  if (location) contacts.push(esc(location));
-  if (basics.phone) contacts.push(`<a href="${esc(`tel:${basics.phone}`)}">${esc(basics.phone)}</a>`);
-  if (basics.email) contacts.push(`<a href="${esc(`mailto:${basics.email}`)}">${esc(basics.email)}</a>`);
+/*
+|--------------------------------------------------------------------------
+| SECTION FORMATS
+|--------------------------------------------------------------------------
+|
+| Every visible section (everything except the header and meta) is built
+| from one of the formats below. A section renderer only maps JSON Resume
+| fields onto a format; it never emits markup of its own.
+|
+| A. roleEntry     -- what / when over where
+| B. studyEntry    -- mirror of A: where / what over when
+| C. creditEntry   -- one title, one date, one linked source line
+| D. projectEntry  -- bold name | tech list, date right
+| E. labelLine     -- "Label: a; b; c" one-liner
+|
+| Formats A-D are laid out by entry(); E is a compact list item.
+|
+|--------------------------------------------------------------------------
+*/
 
+/*
+ * Joins optional meta fragments with the
+ * pipe separator used across the theme:
+ *
+ * Issuer | Credential
+ */
+function joinMeta(parts) {
+  return arrayOrEmpty(parts)
+    .filter(Boolean)
+    .join(" | ");
+}
+
+/*
+ * JSON Resume carries a prose field
+ * (summary / description) alongside
+ * highlights.
+ *
+ * It is rendered as the first bullet.
+ */
+function withLeadingHighlight(text, highlights) {
+  const list = arrayOrEmpty(highlights)
+    .filter(Boolean);
+
+  if (text && !list.includes(text)) {
+    list.unshift(text);
+  }
+
+  return list;
+}
+
+/*
+ * Renders the source line shared by
+ * formats C and D:
+ *
+ * Publisher | Publication Link
+ */
+function sourceHtml({
+  detail = "",
+  url = "",
+  urlLabel = ""
+}) {
+  return joinMeta([
+    detail
+      ? esc(detail)
+      : "",
+
+    url
+      ? link(url, urlLabel)
+      : ""
+  ]);
+}
+
+/*
+| FORMAT A
+|
+| Position                        Dates
+| Organization                    Location
+*/
+function roleEntry({
+  role = "",
+  organization = "",
+  date = "",
+  location = "",
+  summary = "",
+  highlights = []
+}) {
+  return entry({
+    title: role,
+    rightTop: date,
+    subtitle: organization,
+    rightBottom: location,
+    highlights: withLeadingHighlight(
+      summary,
+      highlights
+    )
+  });
+}
+
+/*
+| FORMAT B
+|
+| Institution                     Location
+| Degree in Area                  Dates
+*/
+function studyEntry({
+  institution = "",
+  location = "",
+  study = "",
+  date = "",
+  highlights = []
+}) {
+  return entry({
+    title: institution,
+    rightTop: location,
+    subtitle: study,
+    rightBottom: date,
+    highlights
+  });
+}
+
+/*
+| FORMAT C
+|
+| Name                            Date
+| Source | Link
+*/
+function creditEntry({
+  name = "",
+  date = "",
+  detail = "",
+  url = "",
+  urlLabel = "",
+  highlights = [],
+  note = ""
+}) {
+  return entry({
+    title: name,
+    rightTop: date,
+    subtitleHtml: sourceHtml({
+      detail,
+      url,
+      urlLabel
+    }),
+    highlights,
+    note
+  });
+}
+
+/*
+| FORMAT D
+|
+| Name | Tech, Tech, Tech         Dates
+| Role: ... | Project Link
+*/
+function projectEntry({
+  name = "",
+  keywords = [],
+  date = "",
+  detail = "",
+  url = "",
+  urlLabel = "",
+  summary = "",
+  highlights = []
+}) {
+  const techText = arrayOrEmpty(keywords)
+    .filter(Boolean)
+    .join(", ");
+
+  const titleHtml = `
+    <div class="project-title">
+
+      <strong>
+        ${esc(name)}
+      </strong>
+
+      ${
+        techText
+          ? `
+            <span>|</span>
+            <span class="project-tech">
+              ${esc(techText)}
+            </span>
+          `
+          : ""
+      }
+
+    </div>
+  `;
+
+  return entry({
+    titleHtml,
+    rightTop: date,
+    subtitleHtml: sourceHtml({
+      detail,
+      url,
+      urlLabel
+    }),
+    highlights: withLeadingHighlight(
+      summary,
+      highlights
+    )
+  });
+}
+
+/*
+| FORMAT E
+|
+| Label: value; value; value
+*/
+function labelLine(label, parts = []) {
+  const detail = arrayOrEmpty(parts)
+    .filter(Boolean)
+    .join("; ");
+
+  return `
+    <li class="compact-line">
+
+      <span class="compact-label">
+        ${esc(label)}
+      </span>
+
+      ${
+        detail
+          ? `: ${esc(detail)}`
+          : ""
+      }
+
+    </li>
+  `;
+}
+
+/*
+ * Section wrappers: guard against empty
+ * data, map each item through a format,
+ * and wrap the result in the matching list.
+ */
+function entrySection(title, items, format) {
+  const list = arrayOrEmpty(items);
+
+  if (!list.length) {
+    return "";
+  }
+
+  return section(
+    title,
+    `<ul class="entries">${list
+      .map(format)
+      .join("")}</ul>`
+  );
+}
+
+function labelSection(title, items, format) {
+  const list = arrayOrEmpty(items);
+
+  if (!list.length) {
+    return "";
+  }
+
+  return section(
+    title,
+    `<ul class="compact-lines">${list
+      .map(format)
+      .join("")}</ul>`
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| BASICS / HEADER
+|--------------------------------------------------------------------------
+*/
+
+function renderHeader(basics = {}) {
+  const location =
+    locationText(basics.location);
+
+  const contacts = [];
+
+  if (location) {
+    contacts.push(
+      esc(location)
+    );
+  }
+
+  if (basics.phone) {
+    contacts.push(
+      `<a href="${esc(
+        `tel:${basics.phone}`
+      )}">${esc(basics.phone)}</a>`
+    );
+  }
+
+  if (basics.email) {
+    contacts.push(
+      `<a href="${esc(
+        `mailto:${basics.email}`
+      )}">${esc(basics.email)}</a>`
+    );
+  }
+
+  /*
+   * Profiles display the network name instead
+   * of the raw URL.
+   *
+   * Example:
+   *
+   * LinkedIn | GitHub | Portfolio
+   *
+   * The links remain clickable.
+   */
   for (const profile of basics.profiles || []) {
-    const label = profile.network || profile.username || profile.url;
-    const href = profile.url;
+    const label =
+      profile.network ||
+      profile.username ||
+      profile.url;
+
+    const href =
+      profile.url;
 
     if (label && href) {
       contacts.push(
-        `<a href="${esc(normalizeUrl(href))}">${esc(label)}</a>`
+        `<a href="${esc(
+          normalizeUrl(href)
+        )}">${esc(label)}</a>`
       );
     }
   }
 
-  if (basics.url) contacts.push(`<a href="${esc(normalizeUrl(basics.url))}">${esc(basics.url)}</a>`);
+  /*
+   * basics.url is displayed as "Website"
+   * unless urlLabel is provided.
+   */
+  if (basics.url) {
+    const websiteLabel =
+      basics.urlLabel ||
+      "Website";
 
-  return `<header class="header">
-    <h1 class="name">${esc(basics.name || "")}</h1>
-    <div class="contact">${contacts.join('<span class="sep">|</span>')}</div>
-  </header>`;
+    contacts.push(
+      `<a href="${esc(
+        normalizeUrl(basics.url)
+      )}">${esc(websiteLabel)}</a>`
+    );
+  }
+
+  return `
+    <header class="header">
+
+      <h1 class="name">
+        ${esc(basics.name || "")}
+      </h1>
+
+      ${
+        basics.label
+          ? `
+            <div class="label">
+              ${esc(basics.label)}
+            </div>
+          `
+          : ""
+      }
+
+      <div class="contact">
+        ${contacts.join(
+          '<span class="sep">|</span>'
+        )}
+      </div>
+
+      ${
+        basics.summary
+          ? `
+            <div class="summary">
+              ${esc(basics.summary)}
+            </div>
+          `
+          : ""
+      }
+
+    </header>
+  `;
 }
+
+/*
+|--------------------------------------------------------------------------
+| EDUCATION
+|--------------------------------------------------------------------------
+*/
 
 function renderEducation(items = []) {
-  if (!items.length) return "";
-  const html = items.map(item => {
-    const study = [item.studyType, item.area].filter(Boolean).join(" in ");
+  return entrySection("Education", items, item => {
     const notes = [];
-    if (Array.isArray(item.courses) && item.courses.length) notes.push(`Relevant Coursework: ${item.courses.join(", ")}`);
-    if (item.score) notes.push(`GPA: ${item.score}`);
-    if (Array.isArray(item.highlights)) notes.push(...item.highlights);
-    return entry({
-      title: item.institution,
-      rightTop: locationText(item.location),
-      subtitle: study,
-      rightBottom: dateRange(item),
-      highlights: notes
+
+    if (
+      Array.isArray(item.courses) &&
+      item.courses.length
+    ) {
+      notes.push(
+        `Relevant Coursework: ${item.courses.join(", ")}`
+      );
+    }
+
+    if (item.score) {
+      notes.push(
+        `GPA: ${item.score}`
+      );
+    }
+
+    notes.push(
+      ...arrayOrEmpty(item.highlights)
+    );
+
+    return studyEntry({
+      institution:
+        item.institution,
+
+      location:
+        locationText(item.location),
+
+      study: [
+        item.studyType,
+        item.area
+      ]
+        .filter(Boolean)
+        .join(" in "),
+
+      date:
+        dateRange(item),
+
+      highlights:
+        notes
     });
-  }).join("");
-  return section("Education", `<ul class="entries">${html}</ul>`);
+  });
 }
+
+/*
+|--------------------------------------------------------------------------
+| WORK / EXPERIENCE
+|--------------------------------------------------------------------------
+*/
 
 function renderWork(items = []) {
-  if (!items.length) return "";
-  const html = items.map(item => entry({
-    title: item.position || item.name,
-    rightTop: dateRange(item),
-    subtitle: item.name || item.organization,
-    rightBottom: locationText(item.location),
-    highlights: item.highlights || []
-  })).join("");
-  return section("Experience", `<ul class="entries">${html}</ul>`);
+  return entrySection("Work", items, item =>
+    roleEntry({
+      role:
+        item.position ||
+        item.name,
+
+      organization:
+        item.name ||
+        item.organization,
+
+      date:
+        dateRange(item),
+
+      location:
+        locationText(
+          item.location
+        ),
+
+      summary:
+        item.summary,
+
+      highlights:
+        item.highlights
+    })
+  );
 }
 
-function renderCertificates(items = []) {
-  if (!items.length) return "";
-  const html = items.map(item => entry({
-    title: item.name,
-    rightTop: item.dateText || monthYear(item.date),
-    subtitle: item.issuer,
-    rightBottom: "",
-    highlights: item.highlights || []
-  })).join("");
-  return section("Certifications", `<ul class="entries">${html}</ul>`);
+/*
+|--------------------------------------------------------------------------
+| VOLUNTEER
+|--------------------------------------------------------------------------
+*/
+
+function renderVolunteer(items = []) {
+  return entrySection("Volunteer", items, item =>
+    roleEntry({
+      role:
+        item.position ||
+        item.organization,
+
+      organization:
+        item.organization,
+
+      date:
+        dateRange(item),
+
+      location:
+        locationText(
+          item.location
+        ),
+
+      summary:
+        item.summary,
+
+      highlights:
+        item.highlights
+    })
+  );
 }
 
-function renderSkills(resume = {}) {
-  const lines = [];
-  for (const lang of resume.languages || []) {
-    const value = [lang.fluency, ...(lang.keywords || [])].filter(Boolean).join("; ");
-    lines.push(`<li class="skill-line"><span class="skill-label">${esc(lang.language)}</span>: ${esc(value)}</li>`);
-  }
-  for (const skill of resume.skills || []) {
-    const parts = [];
-    if (skill.level) parts.push(skill.level);
-    if (Array.isArray(skill.keywords) && skill.keywords.length) parts.push(skill.keywords.join(", "));
-    if (skill.summary) parts.push(skill.summary);
-    lines.push(`<li class="skill-line"><span class="skill-label">${esc(skill.name)}</span>: ${esc(parts.join("; "))}</li>`);
-  }
-  return lines.length ? section("Skills", `<ul class="skills">${lines.join("")}</ul>`) : "";
-}
-
-function renderActivities(items = []) {
-  if (!items.length) return "";
-  const html = items.map(item => entry({
-    title: item.position || item.role || item.name,
-    rightTop: dateRange(item),
-    subtitle: item.organization || item.name,
-    rightBottom: locationText(item.location),
-    highlights: item.highlights || []
-  })).join("");
-  return section("Activities", `<ul class="entries">${html}</ul>`);
-}
+/*
+|--------------------------------------------------------------------------
+| PROJECTS
+|--------------------------------------------------------------------------
+|
+| Mimics:
+|
+| Gitlytics | Python, Flask, React, PostgreSQL, Docker
+|                                      June 2020 -- Present
+|
+|--------------------------------------------------------------------------
+*/
 
 function renderProjects(items = []) {
-  if (!items.length) return "";
-  const html = items.map(item => entry({
-    title: item.name,
-    rightTop: dateRange(item),
-    subtitle: (item.roles || []).join(", "),
-    rightBottom: "",
-    highlights: item.highlights || (item.description ? [item.description] : [])
-  })).join("");
-  return section("Projects", `<ul class="entries">${html}</ul>`);
+  return entrySection("Projects", items, item => {
+    const extras = [];
+
+    if (
+      Array.isArray(item.roles) &&
+      item.roles.length
+    ) {
+      extras.push(
+        `Role: ${item.roles.join(", ")}`
+      );
+    }
+
+    if (item.entity) {
+      extras.push(
+        item.entity
+      );
+    }
+
+    if (item.type) {
+      extras.push(
+        item.type
+      );
+    }
+
+    return projectEntry({
+      name:
+        item.name,
+
+      /*
+       * You may use either:
+       *
+       * "technologies": [...]
+       *
+       * or standard JSON Resume:
+       *
+       * "keywords": [...]
+       */
+      keywords:
+        arrayOrEmpty(
+          item.technologies
+        ).length
+          ? item.technologies
+          : item.keywords,
+
+      date:
+        dateRange(item),
+
+      detail:
+        extras.join(" | "),
+
+      url:
+        item.url,
+
+      urlLabel:
+        item.urlLabel ||
+        "Project Link",
+
+      summary:
+        item.description,
+
+      highlights:
+        item.highlights
+    });
+  });
 }
 
+/*
+|--------------------------------------------------------------------------
+| AWARDS
+|--------------------------------------------------------------------------
+*/
+
+function renderAwards(items = []) {
+  return entrySection("Awards", items, item =>
+    creditEntry({
+      name:
+        item.title,
+
+      date:
+        singleDate(item),
+
+      detail:
+        item.awarder,
+
+      highlights:
+        item.summary
+          ? [item.summary]
+          : item.highlights
+    })
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| CERTIFICATES
+|--------------------------------------------------------------------------
+*/
+
+function renderCertificates(items = []) {
+  return entrySection("Certifications", items, item =>
+    creditEntry({
+      name:
+        item.name,
+
+      date:
+        singleDate(item),
+
+      detail:
+        item.issuer,
+
+      url:
+        item.url,
+
+      urlLabel:
+        item.urlLabel ||
+        "Credential",
+
+      highlights:
+        item.highlights
+    })
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| PUBLICATIONS
+|--------------------------------------------------------------------------
+*/
+
+function renderPublications(items = []) {
+  return entrySection("Publications", items, item =>
+    creditEntry({
+      name:
+        item.name,
+
+      date:
+        singleDate(
+          item,
+          "releaseDate"
+        ),
+
+      detail:
+        item.publisher,
+
+      url:
+        item.url,
+
+      urlLabel:
+        item.urlLabel ||
+        "Publication Link",
+
+      highlights:
+        item.summary
+          ? [item.summary]
+          : item.highlights
+    })
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| SKILLS
+|--------------------------------------------------------------------------
+*/
+
+function renderSkills(items = []) {
+  return labelSection("Skills", items, skill =>
+    labelLine(
+      skill.name || "Skill",
+      [
+        skill.level,
+
+        arrayOrEmpty(
+          skill.keywords
+        ).join(", "),
+
+        skill.summary
+      ]
+    )
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| LANGUAGES
+|--------------------------------------------------------------------------
+*/
+
+function renderLanguages(items = []) {
+  return labelSection("Languages", items, lang =>
+    labelLine(
+      lang.language || "Language",
+      [
+        lang.fluency,
+
+        ...arrayOrEmpty(
+          lang.keywords
+        )
+      ]
+    )
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| INTERESTS
+|--------------------------------------------------------------------------
+*/
+
+function renderInterests(items = []) {
+  return labelSection("Interests", items, item =>
+    labelLine(
+      item.name || "Interest",
+      [
+        arrayOrEmpty(
+          item.keywords
+        ).join(", ")
+      ]
+    )
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| REFERENCES
+|--------------------------------------------------------------------------
+*/
+
+function renderReferences(items = []) {
+  return entrySection("References", items, item =>
+    creditEntry({
+      name:
+        item.name ||
+        "Reference",
+
+      detail: joinMeta([
+        item.position,
+        item.organization,
+        item.email,
+        item.phone
+      ]),
+
+      note:
+        item.reference
+    })
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| CUSTOM ACTIVITIES
+|--------------------------------------------------------------------------
+|
+| Not part of the standard JSON Resume schema.
+|
+| Example:
+|
+| "activities": [
+|   {
+|     "organization": "University Robotics Club",
+|     "position": "Member",
+|     "startDate": "2025-08-01",
+|     "dateText": "Aug. 2025 -- Present",
+|     "location": {
+|       "city": "San Jose",
+|       "region": "CA"
+|     },
+|     "highlights": []
+|   }
+| ]
+|
+|--------------------------------------------------------------------------
+*/
+
+function renderActivities(items = []) {
+  return entrySection("Activities", items, item =>
+    roleEntry({
+      role:
+        item.position ||
+        item.role ||
+        item.name,
+
+      organization:
+        item.organization ||
+        item.name,
+
+      date:
+        dateRange(item),
+
+      location:
+        locationText(
+          item.location
+        ),
+
+      highlights:
+        item.highlights
+    })
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
+| META
+|--------------------------------------------------------------------------
+|
+| meta is not displayed as a visible resume section.
+| It is used for HTML document metadata.
+|
+|--------------------------------------------------------------------------
+*/
+
+function renderMetaHead(meta = {}) {
+  const tags = [];
+
+  if (meta.canonical) {
+    tags.push(
+      `<link rel="canonical" href="${esc(
+        normalizeUrl(
+          meta.canonical
+        )
+      )}">`
+    );
+  }
+
+  if (meta.lastModified) {
+    tags.push(
+      `<meta name="last-modified" content="${esc(
+        meta.lastModified
+      )}">`
+    );
+  }
+
+  if (meta.version) {
+    tags.push(
+      `<meta name="resume-version" content="${esc(
+        meta.version
+      )}">`
+    );
+  }
+
+  return tags.join("\n  ");
+}
+
+/*
+|--------------------------------------------------------------------------
+| MAIN RENDER
+|--------------------------------------------------------------------------
+*/
+
 export function render(resume = {}) {
-  const title = resume.basics?.name ? `${resume.basics.name} - Resume` : "Resume";
+  const title =
+    resume.basics?.name
+      ? `${resume.basics.name} - Resume`
+      : "Resume";
+
+  const meta =
+    resume.meta || {};
+
   const body = [
-    renderHeader(resume.basics),
-    renderEducation(resume.education || []),
-    renderWork(resume.work || []),
-    renderProjects(resume.projects || []),
-    renderCertificates(resume.certificates || []),
-    renderSkills(resume),
-    renderActivities(resume.activities || [])
+    renderHeader(
+      resume.basics || {}
+    ),
+
+    renderEducation(
+      resume.education || []
+    ),
+
+    renderWork(
+      resume.work || []
+    ),
+
+    renderVolunteer(
+      resume.volunteer || []
+    ),
+
+    renderProjects(
+      resume.projects || []
+    ),
+
+    renderAwards(
+      resume.awards || []
+    ),
+
+    renderCertificates(
+      resume.certificates || []
+    ),
+
+    renderPublications(
+      resume.publications || []
+    ),
+
+    renderSkills(
+      resume.skills || []
+    ),
+
+    renderLanguages(
+      resume.languages || []
+    ),
+
+    renderInterests(
+      resume.interests || []
+    ),
+
+    renderActivities(
+      resume.activities || []
+    ),
+
+    renderReferences(
+      resume.references || []
+    )
   ].join("");
 
   return `<!doctype html>
-<html lang="${esc(resume.meta?.language || "en")}">
+
+<html lang="${esc(
+    meta.language || "en"
+  )}">
+
 <head>
+
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="jsonresume-theme-jake-resume">
-  <title>${esc(title)}</title>
-  <style>${css}</style>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="generator"
+    content="jsonresume-theme-jake-latex"
+  >
+
+  ${renderMetaHead(meta)}
+
+  <title>
+    ${esc(title)}
+  </title>
+
+  <style>
+    ${css}
+  </style>
+
 </head>
+
 <body>
-  <main class="resume">${body}</main>
+
+  <main class="resume">
+    ${body}
+  </main>
+
 </body>
+
 </html>`;
 }
 
-export default { render };
+export default {
+  render
+};
