@@ -88,7 +88,7 @@ It also supports optional display helpers such as `dateText` and `endDateText` s
 
 ## Attribution
 
-Visual design adapted from the supplied LaTeX resume source credited to `jakegut/resume' and based on `sb2nov/resume`. The source states an MIT license.
+Visual design adapted from the supplied LaTeX resume source credited to `jakegut/resume` and based on `sb2nov/resume`. The source states an MIT license.
 
 ## Theme API
 
