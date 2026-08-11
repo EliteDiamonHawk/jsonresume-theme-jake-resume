@@ -22,11 +22,14 @@ The theme recreates the main visual traits of the supplied LaTeX source:
 
 ## Local preview
 
+Open `preview.html` in a browser.
+
+
+Or generate a new preview with:
+
 ```bash
 npm run preview
 ```
-
-Then open `preview.html` in a browser.
 
 ## Use with resume-cli
 
@@ -39,20 +42,20 @@ npm install -g resume-cli
 From a directory containing your `resume.json`, install this theme locally or publish it to npm, then export:
 
 ```bash
-resume export resume.html --theme ./path/to/jsonresume-theme-jake-latex
+resume export resume.html --theme ./path/to/jsonresume-theme-jake-resume
 ```
 
 Depending on the installed `resume-cli` version, local theme resolution can vary. A reliable development option is to install the theme package into the resume project first:
 
 ```bash
-npm install ./path/to/jsonresume-theme-jake-latex
-resume export resume.html --theme jsonresume-theme-jake-latex
+npm install ./path/to/jsonresume-theme-jake-resume
+resume export resume.html --theme jsonresume-theme-jake-resume
 ```
 
 For PDF output:
 
 ```bash
-resume export resume.pdf --theme jsonresume-theme-jake-latex
+resume export resume.pdf --theme jsonresume-theme-jake-resume
 ```
 
 ## Custom extension: `activities`
@@ -63,11 +66,19 @@ The JSON Resume schema does not currently provide a dedicated membership/activit
 {
   "activities": [
     {
-      "organization": "SJSU Computer Science Club (ACM)",
-      "position": "Paid Member",
-      "startDate": "2025-08-01",
-      "dateText": "Aug. 2025 -- Present",
-      "location": { "city": "San Jose", "region": "CA" }
+      "organization": "University Robotics Club",
+      "position": "Project Member",
+      "startDate": "2024-09-01",
+      "dateText": "Sep. 2024 -- Present",
+      "location": { "city": "San Diego", "region": "CA" }
+    },
+    {
+      "organization": "Hackathon Association",
+      "position": "Event Volunteer",
+      "startDate": "2025-02-01",
+      "endDate": "2025-05-01",
+      "dateText": "Feb. 2025 -- May 2025",
+      "location": { "city": "Los Angeles", "region": "CA" }
     }
   ]
 }

@@ -349,7 +349,7 @@ export function render(resume = {}) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="jsonresume-theme-jake-latex">
+  <meta name="generator" content="jsonresume-theme-jake-resume">
   <title>${esc(title)}</title>
   <style>${css}</style>
 </head>
