@@ -17,15 +17,16 @@ The theme recreates the main visual traits of the supplied LaTeX source:
 
 - `index.js` — JSON Resume theme; exports `render(resume)`
 - `resume.json` — sample data converted from the supplied LaTeX resume
-- `preview.html` — generated local preview
-- `scripts/build-preview.mjs` — regenerates the preview
+- `preview.html` — generated local preview (uncensored)
+- `preview-censored.html` — generated local preview with `meta.censorship` applied
+- `scripts/build-preview.mjs` — regenerates both previews
 
 ## Local preview
 
-Open `preview.html` in a browser.
+Open `preview.html` in a browser, or `preview-censored.html` to see the same resume with `meta.censorship` applied.
 
 
-Or generate a new preview with:
+Or generate new previews with:
 
 ```bash
 npm run preview
@@ -93,6 +94,39 @@ Section headings default to the theme's own wording (`Work`, `Volunteer`, `Certi
 
 This renames only the heading — the section's data still comes from its standard key, and the layout of its entries is unchanged. Aliases for unrecognized keys, and values that are not a non-empty string, fall back to the default title.
 
+## Hiding contact details: `meta.censorship`
+
+Contact details can be withheld from the rendered header — useful for a copy posted publicly:
+
+```json
+{
+  "meta": {
+    "censorship": {
+      "toggle": true,
+      "content": ["phone", "email", "Kaggle", "LinkedIn"]
+    }
+  }
+}
+```
+
+Censorship is opt-in: a resume without `meta.censorship`, or with `toggle` set to anything other than `true`, renders in full.
+
+Each entry in `content` names either a `basics` field —
+
+`name`, `label`, `email`, `phone`, `url`, `summary`, `location`
+
+— or a single profile, matched against its `network`, `username`, or `url`. The literal key `profiles` removes every profile at once. Matching is case-insensitive, and unrecognized entries are ignored. Hiding `url` also drops its `urlLabel`, since that is only ever the link's display text.
+
+Only the header is affected; section entries are unchanged.
+
+`render()` takes an optional second argument that overrides the toggle, which is how one `resume.json` produces both previews:
+
+```js
+render(resume);                   // follows meta.censorship.toggle
+render(resume, { censor: true }); // always applies meta.censorship.content
+render(resume, { censor: false }); // always renders in full
+```
+
 It also supports optional display helpers such as `dateText` and `endDateText` so wording like `(Projected) May 2029` can be reproduced exactly. Unknown/custom properties are simply ignored by other themes that do not support them.
 
 ## Attribution
@@ -101,4 +135,4 @@ Visual design adapted from the supplied LaTeX resume source credited to `jakegut
 
 ## Theme API
 
-The package is dependency-free and exports a pure `render(resume)` function. All CSS is embedded directly in the returned HTML.
+The package is dependency-free and exports a pure `render(resume, options?)` function. All CSS is embedded directly in the returned HTML.

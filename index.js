@@ -180,21 +180,6 @@ body {
   font-size: 9.7pt;
 }
 
-@media screen {
-  body {
-    background: #ececec;
-    padding: 24px 0;
-  }
-
-  .resume {
-    width: 8.5in;
-    min-height: 11in;
-    padding: 0.48in 0.55in;
-    background: #fff;
-    box-shadow: 0 2px 12px rgba(0,0,0,.15);
-  }
-}
-
 @media print {
   .resume {
     max-width: none;
@@ -687,6 +672,150 @@ function labelSection(title, items, format) {
       .map(format)
       .join("")}</ul>`
   );
+}
+
+/*
+|--------------------------------------------------------------------------
+| CENSORSHIP
+|--------------------------------------------------------------------------
+|
+| Contact details can be withheld from the rendered header:
+|
+| "meta": {
+|   "censorship": {
+|     "toggle": true,
+|     "content": ["phone", "email", "Kaggle", "LinkedIn"]
+|   }
+| }
+|
+| Censorship is opt-in. A resume without meta.censorship, or with
+| toggle set to anything other than true, renders in full.
+|
+| Each entry in content names either a basics field
+|
+|   name, label, email, phone, url, summary, location
+|
+| or a single profile, matched against its network, username, or url.
+| The literal key "profiles" removes every profile at once. Matching
+| is case-insensitive; unrecognized entries are ignored.
+|
+|--------------------------------------------------------------------------
+*/
+
+const CENSORABLE_BASICS = [
+  "name",
+  "label",
+  "email",
+  "phone",
+  "url",
+  "summary",
+  "location"
+];
+
+/*
+ * Returns the set of lowercased censorship
+ * targets, or null when nothing should be
+ * withheld.
+ *
+ * null is the "render in full" signal used
+ * by every helper below.
+ */
+function censorshipTargets(meta = {}) {
+  const settings = meta.censorship;
+
+  if (
+    !settings ||
+    typeof settings !== "object" ||
+    settings.toggle !== true
+  ) {
+    return null;
+  }
+
+  const targets = new Set(
+    arrayOrEmpty(settings.content)
+      .filter(
+        value =>
+          typeof value === "string" &&
+          value.trim()
+      )
+      .map(value =>
+        value.trim().toLowerCase()
+      )
+  );
+
+  return targets.size
+    ? targets
+    : null;
+}
+
+/*
+ * A profile is withheld when any of the
+ * identifiers shown to the reader matches
+ * a target.
+ */
+function isCensoredProfile(profile = {}, targets) {
+  if (targets.has("profiles")) {
+    return true;
+  }
+
+  return [
+    profile.network,
+    profile.username,
+    profile.url
+  ]
+    .filter(
+      value => typeof value === "string"
+    )
+    .some(value =>
+      targets.has(
+        value.trim().toLowerCase()
+      )
+    );
+}
+
+/*
+ * Produces a copy of basics with the
+ * censored fields and profiles removed.
+ *
+ * Downstream renderers already omit
+ * missing fields, so removal is all that
+ * is required.
+ */
+function censorBasics(basics = {}, targets) {
+  if (!targets) {
+    return basics;
+  }
+
+  const visible = { ...basics };
+
+  for (const field of CENSORABLE_BASICS) {
+    if (targets.has(field)) {
+      delete visible[field];
+    }
+  }
+
+  /*
+   * urlLabel is only ever displayed as the
+   * text of basics.url, so it leaves with it.
+   */
+  if (targets.has("url")) {
+    delete visible.urlLabel;
+  }
+
+  const profiles = arrayOrEmpty(
+    basics.profiles
+  ).filter(
+    profile =>
+      !isCensoredProfile(profile, targets)
+  );
+
+  if (profiles.length) {
+    visible.profiles = profiles;
+  } else {
+    delete visible.profiles;
+  }
+
+  return visible;
 }
 
 /*
@@ -1340,19 +1469,43 @@ function renderMetaHead(meta = {}) {
 |--------------------------------------------------------------------------
 */
 
-export function render(resume = {}) {
-  const title =
-    resume.basics?.name
-      ? `${resume.basics.name} - Resume`
-      : "Resume";
-
+/*
+ * options.censor overrides meta.censorship.toggle:
+ *
+ *   true      -- always apply meta.censorship.content
+ *   false     -- render in full
+ *   undefined -- follow the resume's own toggle
+ *
+ * This is what lets one resume.json produce both a
+ * full and a censored preview.
+ */
+export function render(resume = {}, options = {}) {
   const meta =
     resume.meta || {};
 
+  const targets =
+    typeof options.censor === "boolean"
+      ? censorshipTargets({
+          ...meta,
+          censorship: {
+            ...(meta.censorship || {}),
+            toggle: options.censor
+          }
+        })
+      : censorshipTargets(meta);
+
+  const basics = censorBasics(
+    resume.basics || {},
+    targets
+  );
+
+  const title =
+    basics.name
+      ? `${basics.name} - Resume`
+      : "Resume";
+
   const body = [
-    renderHeader(
-      resume.basics || {}
-    ),
+    renderHeader(basics),
 
     renderSections(resume, meta)
   ].join("");

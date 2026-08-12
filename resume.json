@@ -21,6 +21,15 @@
     "aliases": {
       "volunteer": "Activities",
       "work": "Experience"
+    },
+    "censorship": {
+      "toggle": true,
+      "content": [
+        "phone",
+        "email",
+        "Kaggle",
+        "LinkedIn"
+      ]
     }
   },
   "basics": {
