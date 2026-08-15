@@ -40,11 +40,7 @@
     "url": "https://maya.dev",
     "urlLabel": "maya.dev",
     "summary": "Computer science student with internship experience in full-stack web development, a background in support and operations roles, and a steady interest in data visualization and accessible interface design.",
-    "location": {
-      "city": "Oakland",
-      "region": "CA",
-      "countryCode": "US"
-    },
+    "location": "Oakland, CA, US",
     "profiles": [
       {
         "network": "LinkedIn",
@@ -71,10 +67,7 @@
   "education": [
     {
       "institution": "Pacific State University",
-      "location": {
-        "city": "Berkeley",
-        "region": "CA"
-      },
+      "location": "Berkeley, CA",
       "studyType": "Bachelor of Science",
       "area": "Computer Science",
       "startDate": "2022-08-01",
@@ -93,10 +86,7 @@
     },
     {
       "institution": "North Bay Community College",
-      "location": {
-        "city": "Richmond",
-        "region": "CA"
-      },
+      "location": "Richmond, CA",
       "studyType": "Certificate",
       "area": "Digital Design",
       "startDate": "2021-01-01",
@@ -111,10 +101,7 @@
       "name": "Orbit Labs",
       "position": "Software Engineering Intern",
       "url": "https://orbitlabs.example.com",
-      "location": {
-        "city": "San Francisco",
-        "region": "CA"
-      },
+      "location": "San Francisco, CA",
       "startDate": "2025-06-01",
       "endDate": "2025-09-01",
       "summary": "Twelve-week internship on the internal tooling team, working across a React front end and a TypeScript service layer.",
@@ -127,10 +114,7 @@
     {
       "name": "Campus Technology Center",
       "position": "Student IT Assistant",
-      "location": {
-        "city": "Berkeley",
-        "region": "CA"
-      },
+      "location": "Berkeley, CA",
       "startDate": "2023-09-01",
       "endDateText": "Present",
       "highlights": [
@@ -142,10 +126,7 @@
     {
       "name": "Redwood Community Market",
       "position": "Shift Associate",
-      "location": {
-        "city": "Oakland",
-        "region": "CA"
-      },
+      "location": "Oakland, CA",
       "startDate": "2022-05-01",
       "endDate": "2023-08-01",
       "highlights": [
@@ -344,10 +325,7 @@
       "organization": "Association for Computing Machinery",
       "position": "Events Coordinator",
       "url": "https://acm.psu.example.edu",
-      "location": {
-        "city": "Berkeley",
-        "region": "CA"
-      },
+      "location": "Berkeley, CA",
       "startDate": "2024-08-01",
       "endDateText": "Present",
       "summary": "Elected to the student chapter board for the 2024-2026 terms.",
@@ -359,10 +337,7 @@
     {
       "organization": "Bay Area Food Collective",
       "position": "Volunteer",
-      "location": {
-        "city": "Oakland",
-        "region": "CA"
-      },
+      "location": "Oakland, CA",
       "startDate": "2023-02-01",
       "endDate": "2024-12-01",
       "highlights": [

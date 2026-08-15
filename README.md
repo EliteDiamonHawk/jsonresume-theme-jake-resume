@@ -77,6 +77,33 @@ Sections listed in `meta.order` render first, in the order given. Any supported 
 
 The header (`basics`) is not part of the ordering and always renders first.
 
+## Locations
+
+Use a plain string for every `location` field, including `basics`, education,
+work, and volunteer entries:
+
+```json
+{ "location": "Oakland, CA, US" }
+```
+
+Location objects such as `{ "city": "Oakland", "region": "CA" }` are not
+rendered.
+
+## Certificate URLs
+
+Each certificate can include a `url` pointing to its verification or credential
+page. It renders as a hyperlink labeled `Credential` by default. Set `urlLabel`
+to supply different link text; certificates without a `url` display no link.
+
+```json
+{
+  "name": "AWS Certified Cloud Practitioner",
+  "issuer": "Amazon Web Services",
+  "url": "https://example.com/verify/credential-id",
+  "urlLabel": "Verify credential"
+}
+```
+
 ## Section titles: `meta.aliases`
 
 Section headings default to the theme's own wording (`Work`, `Volunteer`, `Certifications`, ...). An optional `meta.aliases` map overrides any of them, keyed by the same top-level resume keys used in `meta.order`:

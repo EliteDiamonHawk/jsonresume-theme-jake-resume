@@ -284,22 +284,10 @@ function dateRange(item = {}) {
     .join(" -- ");
 }
 
-function locationText(location = {}) {
-  if (!location) {
-    return "";
-  }
-
-  if (typeof location === "string") {
-    return location;
-  }
-
-  return [
-    location.city,
-    location.region,
-    location.countryCode
-  ]
-    .filter(Boolean)
-    .join(", ");
+function locationText(location = "") {
+  return typeof location === "string"
+    ? location
+    : "";
 }
 
 function arrayOrEmpty(value) {
