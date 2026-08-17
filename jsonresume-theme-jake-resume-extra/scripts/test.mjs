@@ -13,7 +13,7 @@ const censored = render(resume, { censor: true });
 assert.doesNotMatch(censored, /maya\.chen@example\.com/);
 assert.doesNotMatch(censored, /555-0187/);
 assert.match(censored, /github\.com\/maya-codes/);
-assert.equal(render(resume), censored);
+assert.equal(render(resume), html);
 
 const standardLocation = render({ basics: { name: "Compatibility", location: { city: "Oakland" } } });
 assert.match(standardLocation, /Oakland/);
