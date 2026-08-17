@@ -1,4 +1,4 @@
-# jsonresume-theme-jake-latex
+# jsonresume-theme-jake-resume
 
 A compact, ATS-friendly JSON Resume theme inspired by `Jake's Resume`'s LaTeX resume layout (itself based on the sb2nov resume template).
 
