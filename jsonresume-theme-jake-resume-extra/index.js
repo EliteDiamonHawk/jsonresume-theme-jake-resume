@@ -285,9 +285,27 @@ function dateRange(item = {}) {
 }
 
 function locationText(location = "") {
-  return typeof location === "string"
-    ? location
-    : "";
+  if (typeof location === "string") {
+    return location;
+  }
+
+  if (
+    !location ||
+    typeof location !== "object" ||
+    Array.isArray(location)
+  ) {
+    return "";
+  }
+
+  return [
+    location.address,
+    location.city,
+    location.region,
+    location.postalCode,
+    location.countryCode
+  ]
+    .filter(Boolean)
+    .join(", ");
 }
 
 function arrayOrEmpty(value) {

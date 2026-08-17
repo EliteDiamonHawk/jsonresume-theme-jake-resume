@@ -1,0 +1,328 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json",
+  "meta": {
+    "canonical": "https://maya.dev/resume",
+    "lastModified": "2026-01-15T09:00:00",
+    "version": "v3.2"
+  },
+  "basics": {
+    "name": "Maya Chen",
+    "label": "Software Engineer",
+    "email": "maya.chen@example.com",
+    "phone": "(415) 555-0187",
+    "url": "https://maya.dev",
+    "summary": "Computer science student with internship experience in full-stack web development, a background in support and operations roles, and a steady interest in data visualization and accessible interface design.",
+    "location": {
+      "city": "Oakland",
+      "region": "CA",
+      "countryCode": "US"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "mayachen",
+        "url": "https://linkedin.com/in/mayachen"
+      },
+      {
+        "network": "GitHub",
+        "username": "maya-codes",
+        "url": "https://github.com/maya-codes"
+      },
+      {
+        "network": "Portfolio",
+        "username": "maya.dev",
+        "url": "https://maya.dev"
+      },
+      {
+        "network": "Kaggle",
+        "username": "mayachen",
+        "url": "https://kaggle.com/mayachen"
+      }
+    ]
+  },
+  "education": [
+    {
+      "institution": "Pacific State University",
+      "studyType": "Bachelor of Science",
+      "area": "Computer Science",
+      "startDate": "2022-08-01",
+      "endDate": "2026-05-01",
+      "score": "3.86",
+      "courses": [
+        "Data Structures",
+        "Operating Systems",
+        "Database Systems",
+        "Machine Learning"
+      ]
+    },
+    {
+      "institution": "North Bay Community College",
+      "studyType": "Certificate",
+      "area": "Digital Design",
+      "startDate": "2021-01-01",
+      "endDate": "2022-05-01"
+    }
+  ],
+  "work": [
+    {
+      "name": "Orbit Labs",
+      "position": "Software Engineering Intern",
+      "url": "https://orbitlabs.example.com",
+      "location": "San Francisco, CA",
+      "startDate": "2025-06-01",
+      "endDate": "2025-09-01",
+      "summary": "Twelve-week internship on the internal tooling team, working across a React front end and a TypeScript service layer.",
+      "highlights": [
+        "Built React dashboard components used by an internal operations team to review customer event data.",
+        "Added API validation and error handling to a TypeScript service, reducing malformed requests during testing.",
+        "Wrote unit tests and participated in weekly code reviews with a five-person engineering team."
+      ]
+    },
+    {
+      "name": "Campus Technology Center",
+      "position": "Student IT Assistant",
+      "location": "Berkeley, CA",
+      "startDate": "2023-09-01",
+      "highlights": [
+        "Troubleshoot classroom computers, projectors, printers, account access, and common network issues.",
+        "Document recurring support problems and maintain setup guides for student employees.",
+        "Assist 20-40 students and faculty members during a typical weekly shift schedule."
+      ]
+    },
+    {
+      "name": "Redwood Community Market",
+      "position": "Shift Associate",
+      "location": "Oakland, CA",
+      "startDate": "2022-05-01",
+      "endDate": "2023-08-01",
+      "highlights": [
+        "Handled checkout, restocking, online pickup orders, and closing procedures in a fast-paced neighborhood store.",
+        "Trained three new team members on register procedures and inventory routines."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Transit Delay Explorer",
+      "entity": "Senior Capstone",
+      "type": "application",
+      "roles": [
+        "Developer",
+        "Designer"
+      ],
+      "url": "https://github.com/maya-codes/transit-delay-explorer",
+      "keywords": [
+        "React",
+        "Vite",
+        "TypeScript",
+        "Chart.js",
+        "Express"
+      ],
+      "startDate": "2025-10-01",
+      "endDate": "2025-12-01",
+      "description": "A web app that visualizes fictional transit delay data by route, station, and hour.",
+      "highlights": [
+        "Modeled 1.2M synthetic trip records in PostgreSQL and exposed them through a small Express API.",
+        "Designed responsive filtering controls and keyboard-accessible navigation.",
+        "Documented the data schema and wrote a contributor setup guide."
+      ]
+    },
+    {
+      "name": "Study Buddy CLI",
+      "roles": [
+        "Solo Developer"
+      ],
+      "url": "https://github.com/maya-codes/study-buddy-cli",
+      "keywords": [
+        "Java",
+        "JUnit",
+        "Maven"
+      ],
+      "startDate": "2024-03-01",
+      "endDate": "2024-04-01",
+      "highlights": [
+        "Built a Java command-line study tracker with spaced-review reminders, CSV export, and basic statistics.",
+        "Practiced interfaces, collections, exception handling, file I/O, and unit testing."
+      ]
+    },
+    {
+      "name": "Ferry Schedule Scraper",
+      "roles": [
+        "Solo Developer"
+      ],
+      "keywords": [
+        "Python",
+        "BeautifulSoup",
+        "SQLite"
+      ],
+      "startDate": "2024-06",
+      "endDate": "2024-08",
+      "description": "A scheduled scraper that collects published ferry timetables and flags schedule changes week over week.",
+      "highlights": [
+        "Normalized inconsistent timetable formats into a single SQLite schema."
+      ]
+    }
+  ],
+  "awards": [
+    {
+      "title": "First Place, Bay Area Collegiate Hackathon",
+      "date": "2025-03-01",
+      "awarder": "Bay Area Tech Consortium",
+      "summary": "Awarded to a four-person team for an accessibility-focused campus navigation prototype built in 36 hours."
+    },
+    {
+      "title": "Undergraduate Research Travel Grant",
+      "date": "2024-11-01",
+      "awarder": "Pacific State University College of Engineering"
+    },
+    {
+      "title": "Outstanding Student Employee of the Year",
+      "date": "2024",
+      "awarder": "Campus Technology Center"
+    }
+  ],
+  "certificates": [
+    {
+      "name": "AWS Certified Cloud Practitioner",
+      "date": "2025-02-01",
+      "issuer": "Amazon Web Services",
+      "url": "https://cp.certmetrics.com/amazon/en/public/verify/credential"
+    },
+    {
+      "name": "Google Data Analytics Certificate",
+      "date": "2024-08-01",
+      "issuer": "Google",
+      "url": "https://coursera.org/verify/professional-cert/example"
+    },
+    {
+      "name": "Adult and Pediatric First Aid/CPR/AED",
+      "date": "2024-01-01",
+      "issuer": "American Red Cross"
+    }
+  ],
+  "publications": [
+    {
+      "name": "Color Choice and Chart Legibility in Student Dashboards",
+      "publisher": "Pacific State Undergraduate Research Journal",
+      "releaseDate": "2025-05-01",
+      "url": "https://psurj.example.edu/2025/color-choice",
+      "summary": "A small study comparing comprehension rates across four categorical palettes used in student-built dashboards."
+    },
+    {
+      "name": "Notes on Teaching Git to First-Year Students",
+      "publisher": "ACM Student Chapter Newsletter",
+      "releaseDate": "2024-09",
+      "url": "https://acm.psu.example.edu/newsletter/git-notes"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Languages",
+      "level": "Proficient",
+      "keywords": [
+        "Java",
+        "TypeScript",
+        "JavaScript",
+        "Python",
+        "SQL",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "name": "Frameworks & Tools",
+      "keywords": [
+        "React",
+        "Vite",
+        "Node.js",
+        "Express",
+        "Git",
+        "GitHub",
+        "PostgreSQL",
+        "Docker"
+      ]
+    },
+    {
+      "name": "Software",
+      "keywords": [
+        "Figma",
+        "Microsoft Excel",
+        "Google Sheets",
+        "Jira",
+        "VS Code"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native"
+    },
+    {
+      "language": "Mandarin Chinese",
+      "fluency": "Conversational"
+    },
+    {
+      "language": "Spanish",
+      "fluency": "Elementary"
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Association for Computing Machinery",
+      "position": "Events Coordinator",
+      "url": "https://acm.psu.example.edu",
+      "startDate": "2024-08-01",
+      "summary": "Elected to the student chapter board for the 2024-2026 terms.",
+      "highlights": [
+        "Help organize technical workshops, alumni panels, and beginner-friendly coding events.",
+        "Grew average workshop attendance from roughly 15 to 40 students over two semesters."
+      ]
+    },
+    {
+      "organization": "Bay Area Food Collective",
+      "position": "Volunteer",
+      "startDate": "2023-02-01",
+      "endDate": "2024-12-01",
+      "highlights": [
+        "Sorted donations and assembled weekly grocery boxes for community distribution."
+      ]
+    }
+  ],
+  "interests": [
+    {
+      "name": "Data Visualization",
+      "keywords": [
+        "Accessible color palettes",
+        "Small multiples",
+        "Print-quality charts"
+      ]
+    },
+    {
+      "name": "Outdoors",
+      "keywords": [
+        "Trail running",
+        "Backpacking",
+        "Bird photography"
+      ]
+    },
+    {
+      "name": "Community Teaching",
+      "keywords": [
+        "Intro programming workshops",
+        "Peer tutoring"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "name": "Dr. Priya Raman",
+      "reference": "Maya was among the most dependable students in my database systems course and carried that same care into her capstone work."
+    },
+    {
+      "name": "Daniel Okafor",
+      "reference": "Maya shipped production dashboard work during a twelve-week internship and asked exactly the right questions in code review."
+    }
+  ]
+}
+
