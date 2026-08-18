@@ -27,4 +27,15 @@ const certificateLinks = render({
 assert.match(certificateLinks, />Credential<|>Credential\s*</);
 assert.match(certificateLinks, /href="https:\/\/example\.com\/default"/);
 
+for (const image of ["https://images.example.com/portrait.png", "http://images.example.com/portrait.jpeg", "https://images.example.com/portrait.svg"]) {
+  const imageHtml = render({ basics: { name: "Image Test", image } });
+  assert.match(imageHtml, /class="header with-image"/);
+  assert.match(imageHtml, new RegExp(`src="${image.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`));
+}
+for (const image of ["portrait.png", "data:image/svg+xml,%3Csvg%3E%3C/svg%3E"]) {
+  assert.doesNotMatch(render({ basics: { name: "Image Test", image } }), /class="header with-image"/);
+}
+assert.match(html, /object-fit:cover/);
+assert.match(html, /beforeprint/);
+
 console.log("Minimal theme render test passed");

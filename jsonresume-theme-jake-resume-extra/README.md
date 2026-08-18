@@ -41,6 +41,18 @@ The theme renders `basics` plus these top-level JSON Resume arrays when they con
 
 The extensions below are optional. A normal JSON Resume renders without them. See the included [resume.json](resume.json) for a complete example.
 
+## Header image
+
+Set the standard `basics.image` field to an absolute `http://` or `https://` image URL. PNG, JPEG, SVG, and other browser-supported image formats work without conversion; local paths and data URIs are ignored. The image sits to the right of the header, is square, and is centered and cropped with `object-fit: cover` to match the header height.
+
+```json
+{
+  "basics": {
+    "image": "https://example.com/images/profile.png"
+  }
+}
+```
+
 ## Section ordering
 
 Use `meta.order` to move known sections to the front in a custom order. Sections omitted from the list still render afterward in the theme's normal order; unknown and duplicate keys are ignored.

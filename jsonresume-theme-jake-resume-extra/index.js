@@ -32,6 +32,31 @@ body {
   margin: 0 0 10px;
 }
 
+.header.with-image {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--header-image-size, 5rem);
+  column-gap: 14px;
+  align-items: start;
+}
+
+.header-content {
+  min-width: 0;
+}
+
+.header-image {
+  width: var(--header-image-size, 5rem);
+  height: var(--header-image-size, 5rem);
+  overflow: hidden;
+}
+
+.header-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .name {
   margin: 0 0 4px;
   font-size: 25pt;
@@ -208,6 +233,17 @@ function normalizeUrl(value = "") {
   }
 
   return `https://${value}`;
+}
+
+function imageUrl(value = "") {
+  const source =
+    typeof value === "string"
+      ? value.trim()
+      : "";
+
+  return /^https?:\/\/\S+$/i.test(source)
+    ? source
+    : "";
 }
 
 function link(url, label, className = "inline-link") {
@@ -902,8 +938,26 @@ function renderHeader(basics = {}) {
     );
   }
 
+  const imageSource =
+    imageUrl(basics.image);
+
+  const image =
+    imageSource
+      ? `
+        <div class="header-image">
+          <img src="${esc(imageSource)}" alt="">
+        </div>
+      `
+      : "";
+
   return `
-    <header class="header">
+    <header class="header${
+      image
+        ? " with-image"
+        : ""
+    }">
+
+      <div class="header-content">
 
       <h1 class="name">
         ${esc(basics.name || "")}
@@ -935,9 +989,51 @@ function renderHeader(basics = {}) {
           : ""
       }
 
+      </div>
+
+      ${image}
+
     </header>
   `;
 }
+
+const headerImageScript = `
+  <script>
+    (function () {
+      function fit() {
+        document
+          .querySelectorAll(".header.with-image")
+          .forEach(header => {
+            const content = header.querySelector(".header-content");
+
+            if (!content) {
+              return;
+            }
+
+            for (let i = 0; i < 5; i += 1) {
+              const size = content.getBoundingClientRect().height;
+
+              if (size) {
+                header.style.setProperty(
+                  "--header-image-size",
+                  size + "px"
+                );
+              }
+            }
+          });
+      }
+
+      window.addEventListener("resize", fit);
+      window.addEventListener("beforeprint", fit);
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(fit);
+      }
+
+      fit();
+    }());
+  </script>
+`;
 
 /*
 |--------------------------------------------------------------------------
@@ -1553,6 +1649,8 @@ export function render(resume = {}, options = {}) {
   <main class="resume">
     ${body}
   </main>
+
+  ${headerImageScript}
 
 </body>
 

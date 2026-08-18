@@ -33,6 +33,18 @@ The section order is fixed: education, work, volunteer, projects, awards, certif
 
 For familiar JSON Resume fields, the theme formats dates as month/year where available, combines location-object components into a readable string, and renders URLs as links. `basics.profiles` use the profile network as their link label. The included [resume.json](resume.json) is a complete working example.
 
+### Header image
+
+Set the standard `basics.image` field to an absolute `http://` or `https://` image URL. PNG, JPEG, SVG, and other browser-supported image formats work without conversion; local paths and data URIs are ignored. The image sits to the right of the header, is square, and is centered and cropped with `object-fit: cover` to match the header height.
+
+```json
+{
+  "basics": {
+    "image": "https://example.com/images/profile.png"
+  }
+}
+```
+
 The `meta.canonical`, `meta.lastModified`, and `meta.version` fields are included in the output document metadata when supplied.
 
 ## Choosing a variant

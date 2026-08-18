@@ -5,6 +5,10 @@ const css = [
   'body{font-family:"Latin Modern Roman","CMU Serif","Computer Modern","Times New Roman",Times,serif;font-size:11pt;line-height:1.16;-webkit-print-color-adjust:exact;print-color-adjust:exact}',
   '.resume{width:100%;max-width:8.5in;margin:0 auto}',
   '.header{margin:0 0 10px;text-align:center}',
+  '.header.with-image{display:grid;grid-template-columns:minmax(0,1fr) var(--header-image-size,5rem);column-gap:14px;align-items:start}',
+  '.header-content{min-width:0}',
+  '.header-image{width:var(--header-image-size,5rem);height:var(--header-image-size,5rem);overflow:hidden}',
+  '.header-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}',
   '.name{margin:0 0 4px;font-size:25pt;line-height:1;font-weight:700;font-variant:small-caps;letter-spacing:.2px}',
   '.label{margin:0 0 3px;font-size:10pt;font-style:italic}',
   '.contact{font-size:9.4pt;line-height:1.25}',
@@ -32,6 +36,11 @@ function list(value) { return Array.isArray(value) ? value : []; }
 function url(value) {
   if (!value || /^(https?:|mailto:|tel:)/i.test(value)) return value || '';
   return 'https://' + value;
+}
+
+function imageUrl(value) {
+  const source = typeof value === 'string' ? value.trim() : '';
+  return /^https?:\/\/\S+$/i.test(source) ? source : '';
 }
 
 function link(href, label) {
@@ -102,11 +111,17 @@ function header(basics) {
     if (label && profile.url) contacts.push(link(profile.url, label));
   });
   if (basics.url) contacts.push(link(basics.url, basics.url));
-  return '<header class="header"><h1 class="name">' + esc(basics.name || '') + '</h1>' +
+  const imageSource = imageUrl(basics.image);
+  const image = imageSource
+    ? '<div class="header-image"><img src="' + esc(imageSource) + '" alt=""></div>'
+    : '';
+  return '<header class="header' + (image ? ' with-image' : '') + '"><div class="header-content"><h1 class="name">' + esc(basics.name || '') + '</h1>' +
     (basics.label ? '<div class="label">' + esc(basics.label) + '</div>' : '') +
     (contacts.length ? '<div class="contact">' + contacts.join('<span class="sep">|</span>') + '</div>' : '') +
-    (basics.summary ? '<div class="summary">' + esc(basics.summary) + '</div>' : '') + '</header>';
+    (basics.summary ? '<div class="summary">' + esc(basics.summary) + '</div>' : '') + '</div>' + image + '</header>';
 }
+
+const headerImageScript = '<script>(function(){function fit(){document.querySelectorAll(".header.with-image").forEach(function(header){var content=header.querySelector(".header-content");if(!content)return;for(var i=0;i<5;i+=1){var size=content.getBoundingClientRect().height;if(size)header.style.setProperty("--header-image-size",size+"px");}})}window.addEventListener("resize",fit);window.addEventListener("beforeprint",fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);fit();}());</script>';
 
 function education(values) {
   return entries('Education', values, value => {
@@ -153,7 +168,7 @@ export function render(resume) {
   if (meta.version) tags.push('<meta name="resume-version" content="' + esc(meta.version) + '">');
   const body = [header(basics)].concat(sections.map(pair => pair[1](value[pair[0]]))).join('');
   const title = basics.name ? basics.name + ' - Resume' : 'Resume';
-  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="jsonresume-theme-jake-resume">' + tags.join('') + '<title>' + esc(title) + '</title><style>' + css + '</style></head><body><main class="resume">' + body + '</main></body></html>';
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="jsonresume-theme-jake-resume">' + tags.join('') + '<title>' + esc(title) + '</title><style>' + css + '</style></head><body><main class="resume">' + body + '</main>' + headerImageScript + '</body></html>';
 }
 
 export default { render };
