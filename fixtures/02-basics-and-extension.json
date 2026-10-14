@@ -1,0 +1,92 @@
+{
+  "basics": {
+    "name": "Jordan Kim",
+    "label": "Computer Science Student",
+    "email": "jordan.kim@example.test",
+    "phone": "+1 555 010 0288",
+    "summary": "Computer science student building dependable software and learning through open-source collaboration.",
+    "location": {
+      "city": "Madison",
+      "region": "Wisconsin",
+      "countryCode": "US"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "jordan-kim",
+        "url": "https://github.example.test/jordan-kim"
+      }
+    ]
+  },
+  "education": [
+    {
+      "institution": "Northlake University",
+      "url": "https://northlake.example.test",
+      "area": "Computer Science",
+      "studyType": "Bachelor of Science",
+      "startDate": "2023-09",
+      "endDate": "2027-05",
+      "score": "3.7/4.0",
+      "courses": [
+        "Data Structures",
+        "Operating Systems",
+        "Database Systems",
+        "Human-Computer Interaction"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Transit Buddy",
+      "description": "A small web application that helps students compare campus bus routes.",
+      "highlights": [
+        "Designed a keyboard-friendly route search flow",
+        "Added cached results for unreliable campus Wi-Fi"
+      ],
+      "keywords": ["TypeScript", "React", "IndexedDB"],
+      "startDate": "2025-01",
+      "endDate": "2025-04",
+      "url": "https://github.example.test/jordan-kim/transit-buddy",
+      "roles": ["Developer", "UX Researcher"]
+    },
+    {
+      "name": "Study Timer CLI",
+      "description": "A terminal timer with configurable work and break intervals.",
+      "keywords": ["Python", "CLI"],
+      "startDate": "2024-10"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Programming",
+      "level": "Intermediate",
+      "keywords": ["Python", "Java", "TypeScript"]
+    },
+    {
+      "name": "Tools",
+      "keywords": ["Git", "Docker", "PostgreSQL"]
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native"
+    },
+    {
+      "language": "Korean",
+      "fluency": "Conversational"
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Madison Code Club",
+      "position": "Workshop Mentor",
+      "startDate": "2024-02",
+      "summary": "Helped high-school students make their first small web projects.",
+      "highlights": [
+        "Created a two-hour HTML and CSS workshop",
+        "Mentored six student teams during a demo night"
+      ]
+    }
+  ]
+}

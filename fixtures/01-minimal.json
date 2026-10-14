@@ -1,0 +1,196 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Elena García",
+    "label": "Staff Platform Engineer",
+    "image": "https://images.example.test/elena-garcia.png",
+    "email": "elena.garcia@example.test",
+    "phone": "+1 555 010 0431",
+    "url": "https://elena.example.test",
+    "summary": "Platform engineer with twelve years of experience improving developer productivity, distributed systems, and operational resilience.",
+    "location": {
+      "address": "410 Market Street",
+      "postalCode": "94105",
+      "city": "San Francisco",
+      "countryCode": "US",
+      "region": "California"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "elenagarcia",
+        "url": "https://github.example.test/elenagarcia"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "elena-garcia",
+        "url": "https://linkedin.example.test/in/elena-garcia"
+      },
+      {
+        "network": "Mastodon",
+        "username": "@elena@tech.example.test",
+        "url": "https://social.example.test/@elena"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Cedar Systems",
+      "position": "Staff Platform Engineer",
+      "url": "https://cedar.example.test",
+      "location": "San Francisco, CA",
+      "startDate": "2021-06",
+      "summary": "Led the platform group responsible for internal deployment and observability tooling.",
+      "highlights": [
+        "Reduced median deployment time from 28 minutes to 7 minutes",
+        "Introduced paved-road templates used by  forty engineering teams",
+        "Coached five senior engineers and coordinated three cross-functional initiatives"
+      ]
+    },
+    {
+      "name": "Harbor Analytics",
+      "position": "Senior Site Reliability Engineer",
+      "url": "https://harbor.example.test",
+      "location": "Oakland, CA",
+      "startDate": "2017-03",
+      "endDate": "2021-05",
+      "summary": "Built reliable infrastructure for a multi-region analytics platform.",
+      "highlights": [
+        "Raised service availability from 99.7% to 99.95%",
+        "Migrated 120 services to automated canary deployments",
+        "Cut incident response time by 35% through better runbooks and alert ownership"
+      ]
+    },
+    {
+      "name": "Northstar Labs",
+      "position": "Software Engineer",
+      "location": "Sacramento, CA",
+      "startDate": "2014-07",
+      "endDate": "2017-02",
+      "summary": "Developed APIs and background processing systems for public-sector customers.",
+      "highlights": [
+        "Delivered six customer-facing integrations in one year",
+        "Replaced a nightly batch pipeline with incremental processing"
+      ]
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Bay Area Women Who Code",
+      "position": "Technical Workshop Volunteer",
+      "url": "https://community.example.test/women-who-code",
+      "startDate": "2019-01",
+      "summary": "Teach practical infrastructure and career topics to early-career engineers.",
+      "highlights": ["Delivered twelve hands-on workshops", "Reviewed mock interview exercises"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "California State University, Sacramento",
+      "url": "https://csus.example.test",
+      "area": "Computer Engineering",
+      "studyType": "Bachelor of Science",
+      "startDate": "2010-08",
+      "endDate": "2014-05",
+      "score": "3.8"
+    }
+  ],
+  "awards": [
+    {
+      "title": "Reliability Champion",
+      "date": "2020-11",
+      "awarder": "Harbor Analytics",
+      "summary": "Recognized for improving operational readiness across the engineering organization."
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Certified Kubernetes Administrator",
+      "date": "2022-09",
+      "issuer": "Cloud Native Computing Foundation",
+      "url": "https://certs.example.test/cka/elena"
+    },
+    {
+      "name": "AWS Certified Solutions Architect – Professional",
+      "date": "2023-04",
+      "issuer": "Amazon Web Services",
+      "url": "https://certs.example.test/aws/elena"
+    }
+  ],
+  "publications": [
+    {
+      "name": "Designing Safer Deployment Pipelines",
+      "publisher": "Systems Practice Journal",
+      "releaseDate": "2024-02",
+      "url": "https://journal.example.test/deployment-pipelines",
+      "summary": "A practical guide to progressive delivery and operational feedback loops."
+    }
+  ],
+  "skills": [
+    {
+      "name": "Platform Engineering",
+      "level": "Expert",
+      "keywords": ["Kubernetes", "Terraform", "Argo CD", "Backstage"]
+    },
+    {
+      "name": "Programming",
+      "level": "Advanced",
+      "keywords": ["Go", "Python", "TypeScript", "SQL"]
+    },
+    {
+      "name": "Cloud Providers",
+      "keywords": ["AWS", "GCP"]
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native"
+    },
+    {
+      "language": "Spanish",
+      "fluency": "Professional working proficiency"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Urban gardening",
+      "keywords": ["Composting", "Native plants"]
+    },
+    {
+      "name": "Ceramics",
+      "keywords": ["Wheel throwing", "Glazing"]
+    }
+  ],
+  "references": [
+    {
+      "name": "Priya Shah",
+      "label": "Former Director of Engineering at Cedar Systems",
+      "reference": "Elena combines deep systems judgment with an unusual ability to make complex work understandable."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Open Service Catalog",
+      "entity": "Cedar Systems",
+      "type": "internal platform",
+      "startDate": "2022-01",
+      "endDate": "2023-06",
+      "url": "https://code.example.test/open-service-catalog",
+      "roles": ["Technical Lead"],
+      "keywords": ["Go", "Kubernetes", "GraphQL"],
+      "description": "An internal catalog that made service ownership and operational health visible to every team.",
+      "highlights": [
+        "Reached 90% adoption across production services",
+        "Unified ownership, runbooks, and on-call metadata"
+      ]
+    }
+  ],
+  "meta": {
+    "canonical": "https://elena.example.test/resume",
+    "version": "1.0.0",
+    "lastModified": "2026-01-18",
+    "theme": "elegant",
+    "pdf": "https://files.example.test/elena-garcia-resume.pdf"
+  }
+}

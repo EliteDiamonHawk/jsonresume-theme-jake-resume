@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Mina Patel",
+    "label": "Product Designer",
+    "email": "mina.patel@example.test",
+    "phone": "+1 555 010 0142",
+    "url": "https://mina.example.test",
+    "summary": "Product designer focused on accessible, calm, and useful interfaces.",
+    "location": {
+      "city": "Portland",
+      "region": "Oregon",
+      "countryCode": "US"
+    },
+    "profiles": [
+      {
+        "network": "Dribbble",
+        "username": "minapatel",
+        "url": "https://dribbble.example.test/minapatel"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "mina-patel",
+        "url": "https://linkedin.example.test/in/mina-patel"
+      }
+    ]
+  },
+  "meta": {
+    "canonical": "https://mina.example.test/resume",
+    "version": "1.0.0",
+    "lastModified": "2026-02-12"
+  },
+  "customSections": [
+    {
+      "title": "Availability",
+      "items": [
+        "Open to contract or full-time product design roles",
+        "Available for remote collaboration"
+      ]
+    }
+  ]
+}

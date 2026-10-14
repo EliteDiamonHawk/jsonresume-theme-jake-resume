@@ -1,0 +1,106 @@
+{
+  "basics": {
+    "name": "Samuel Okafor",
+    "label": "Museum Educator and Program Coordinator",
+    "email": "samuel.okafor@example.test",
+    "url": "https://samuel.example.test",
+    "summary": "Museum educator who builds welcoming learning programs for families, schools, and multilingual communities.",
+    "location": {
+      "city": "Chicago",
+      "region": "Illinois",
+      "countryCode": "US"
+    }
+  },
+  "work": [
+    {
+      "name": "Lakefront Museum of History",
+      "position": "Education Program Coordinator",
+      "location": "Chicago, IL",
+      "startDate": "2020-08",
+      "summary": "Coordinate school visits, public programs, and educator partnerships.",
+      "highlights": [
+        "Expanded school programming from 18 to 31 partner schools",
+        "Created a bilingual family day series that served more than 1,000 visitors",
+        "Trained a rotating team of 24 volunteer educators"
+      ]
+    },
+    {
+      "name": "Riverbend Cultural Center",
+      "position": "Gallery Educator",
+      "location": "Evanston, IL",
+      "startDate": "2017-06",
+      "endDate": "2020-07",
+      "summary": "Facilitated gallery conversations and designed hands-on learning activities."
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Illinois Chicago",
+      "area": "Art History",
+      "studyType": "Master of Arts",
+      "startDate": "2015-08",
+      "endDate": "2017-05"
+    },
+    {
+      "institution": "DePaul University",
+      "area": "History",
+      "studyType": "Bachelor of Arts",
+      "startDate": "2011-09",
+      "endDate": "2015-06"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Program Design",
+      "keywords": ["Curriculum planning", "Facilitation", "Evaluation"]
+    },
+    {
+      "name": "Community Engagement",
+      "keywords": ["Partnerships", "Public speaking", "Volunteer coordination"]
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native"
+    },
+    {
+      "language": "Igbo",
+      "fluency": "Native"
+    },
+    {
+      "language": "Spanish",
+      "fluency": "Limited working proficiency"
+    }
+  ],
+  "awards": [
+    {
+      "title": "Community Learning Award",
+      "date": "2023",
+      "awarder": "Chicago Cultural Access Network",
+      "summary": "Honored for building accessible family learning programs."
+    }
+  ],
+  "publications": [
+    {
+      "name": "Making the Museum Feel Like a Neighborhood",
+      "publisher": "Public History Quarterly",
+      "releaseDate": "2022-10",
+      "summary": "An essay on designing museum programs with community partners."
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "South Side Youth Arts Collective",
+      "position": "Board Secretary",
+      "startDate": "2021-01",
+      "summary": "Support governance, grant review, and youth exhibition planning."
+    }
+  ],
+  "interests": [
+    {
+      "name": "Oral history",
+      "keywords": ["Interviews", "Archiving"]
+    }
+  ]
+}

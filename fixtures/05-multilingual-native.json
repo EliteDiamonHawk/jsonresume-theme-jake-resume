@@ -1,0 +1,100 @@
+{
+  "picture": {
+    "hidden": true,
+    "url": "",
+    "size": 80,
+    "rotation": 0,
+    "aspectRatio": 1,
+    "borderRadius": 0,
+    "borderColor": "rgba(0, 0, 0, 0.5)",
+    "borderWidth": 0,
+    "shadowColor": "rgba(0, 0, 0, 0.5)",
+    "shadowWidth": 0
+  },
+  "basics": {
+    "name": "Kai Rivera",
+    "headline": "Creative Producer",
+    "email": "kai.rivera@example.test",
+    "phone": "+1 555 010 1090",
+    "location": "Los Angeles, CA",
+    "website": { "url": "https://kai.example.test", "label": "Work samples" },
+    "customFields": []
+  },
+  "summary": {
+    "title": "About",
+    "columns": 1,
+    "hidden": false,
+    "content": "<p>Creative producer who brings structure, warmth, and momentum to ambitious editorial and cultural projects.</p>"
+  },
+  "sections": {
+    "experience": {
+      "title": "Experience",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000501", "hidden": false, "company": "Field Notes Studio", "position": "Creative Producer", "location": "Los Angeles, CA", "period": "2022 - Present", "website": { "url": "https://fieldnotes.example.test", "label": "" }, "description": "<p>Produce campaigns, exhibitions, and editorial projects from brief to delivery.</p>" }
+      ]
+    },
+    "skills": {
+      "title": "Core skills",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000502", "hidden": false, "icon": "", "name": "Production", "proficiency": "Advanced", "level": 4, "keywords": ["Budgets", "Scheduling", "Creative direction"] }
+      ]
+    }
+  },
+  "customSections": [
+    {
+      "id": "018f2f40-6e5a-7000-8000-000000000503",
+      "title": "Selected Exhibitions",
+      "columns": 1,
+      "hidden": false,
+      "type": "projects",
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000504", "hidden": false, "name": "Afterimage", "period": "2025", "website": { "url": "https://exhibitions.example.test/afterimage", "label": "View project" }, "description": "<p>A group exhibition exploring memory, light, and the archive.</p>" },
+        { "id": "018f2f40-6e5a-7000-8000-000000000505", "hidden": false, "name": "Soft Systems", "period": "2024", "website": { "url": "", "label": "" }, "description": "<p>A public program pairing artists with local organizers.</p>" }
+      ]
+    },
+    {
+      "id": "018f2f40-6e5a-7000-8000-000000000506",
+      "title": "Community Work",
+      "columns": 2,
+      "hidden": false,
+      "type": "volunteer",
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000507", "hidden": false, "organization": "Neighborhood Arts Exchange", "location": "Los Angeles, CA", "period": "2023 - Present", "website": { "url": "", "label": "" }, "description": "<p>Coordinate free production clinics for emerging artists.</p>" }
+      ]
+    },
+    {
+      "id": "018f2f40-6e5a-7000-8000-000000000508",
+      "title": "Tools",
+      "columns": 1,
+      "hidden": false,
+      "type": "skills",
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000509", "hidden": false, "icon": "", "name": "Production tools", "proficiency": "Advanced", "level": 4, "keywords": ["Notion", "Airtable", "Figma", "Adobe Creative Cloud"] }
+      ]
+    }
+  ],
+  "metadata": {
+    "template": "ditto",
+    "layout": {
+      "sidebarWidth": 35,
+      "pages": [
+        { "fullWidth": false, "main": ["summary", "experience", "018f2f40-6e5a-7000-8000-000000000503", "018f2f40-6e5a-7000-8000-000000000506"], "sidebar": ["skills", "018f2f40-6e5a-7000-8000-000000000508"] }
+      ]
+    },
+    "css": { "enabled": false, "value": "" },
+    "page": { "gapX": 4, "gapY": 8, "marginX": 14, "marginY": 12, "format": "a4", "locale": "en-US", "hideIcons": false },
+    "design": {
+      "colors": { "primary": "rgba(234, 88, 12, 1)", "text": "rgba(28, 25, 23, 1)", "background": "rgba(255, 247, 237, 1)" },
+      "level": { "icon": "circle", "type": "square" }
+    },
+    "typography": {
+      "body": { "fontFamily": "DM Sans", "fontWeights": ["400", "500"], "fontSize": 10, "lineHeight": 1.5 },
+      "heading": { "fontFamily": "DM Sans", "fontWeights": ["600", "700"], "fontSize": 14, "lineHeight": 1.4 }
+    },
+    "notes": "Custom-section fixture with custom layout ordering and multiple section types."
+  }
+}

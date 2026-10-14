@@ -1,0 +1,55 @@
+{
+  "picture": { "hidden": true, "url": "" },
+  "basics": {
+    "name": "Alex Morgan",
+    "headline": "Product-minded engineer",
+    "email": "alex@example.com",
+    "phone": "555-0100",
+    "location": "Oakland, CA",
+    "website": { "url": "https://example.com", "label": "Portfolio" }
+  },
+  "summary": {
+    "title": "Profile",
+    "content": "Engineer focused on <strong>reliable systems</strong> and clear communication."
+  },
+  "sections": {
+    "experience": {
+      "title": "Selected Experience",
+      "items": [
+        {
+          "company": "Example Labs",
+          "position": "Software Engineer",
+          "location": "San Francisco, CA",
+          "dates": { "start": "2024-06", "end": null, "present": true },
+          "description": "Built internal tools and improved test coverage."
+        }
+      ]
+    },
+    "research": {
+      "title": "Research",
+      "items": [
+        {
+          "name": "Accessible Data Visualization",
+          "dates": { "start": "2025", "end": null },
+          "notes": ["Improved chart comprehension", "Published an open dataset"]
+        }
+      ]
+    }
+  },
+  "customSections": [
+    {
+      "id": "community",
+      "title": "Community Work",
+      "items": [
+        { "name": "Coding Workshop Mentor", "organization": "Community Lab" }
+      ]
+    }
+  ],
+  "metadata": {
+    "layout": {
+      "pages": [
+        { "main": ["summary", "experience", "community"], "sidebar": ["research"] }
+      ]
+    }
+  }
+}

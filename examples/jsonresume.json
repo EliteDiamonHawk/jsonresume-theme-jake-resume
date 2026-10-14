@@ -1,0 +1,38 @@
+{
+  "$schema": "https://jsonresume.org/schema",
+  "basics": {
+    "name": "Alex Morgan",
+    "label": "Software Engineer",
+    "email": "alex@example.com",
+    "location": "Oakland, CA",
+    "profiles": [
+      { "network": "GitHub", "url": "https://github.com/example" }
+    ],
+    "summary": "Engineer focused on reliable tools and accessible interfaces."
+  },
+  "research": [
+    {
+      "title": "Accessible Data Visualization",
+      "date": "2025",
+      "institution": "Pacific State University",
+      "findings": ["Improved chart comprehension", "Published an open dataset"]
+    }
+  ],
+  "work": [
+    {
+      "position": "Software Engineer",
+      "company": "Example Labs",
+      "startDate": "2024-06",
+      "endDate": "Present",
+      "location": "San Francisco, CA",
+      "highlights": ["Built internal tools", "Improved test coverage"]
+    }
+  ],
+  "community": [
+    {
+      "name": "Coding Workshop Mentor",
+      "organization": "Community Lab",
+      "details": "Led beginner-friendly programming sessions."
+    }
+  ]
+}

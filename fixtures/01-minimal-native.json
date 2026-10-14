@@ -1,0 +1,87 @@
+{
+  "picture": {
+    "hidden": true,
+    "url": "",
+    "size": 80,
+    "rotation": 0,
+    "aspectRatio": 1,
+    "borderRadius": 0,
+    "borderColor": "rgba(0, 0, 0, 0.5)",
+    "borderWidth": 0,
+    "shadowColor": "rgba(0, 0, 0, 0.5)",
+    "shadowWidth": 0
+  },
+  "basics": {
+    "name": "Élodie Martin",
+    "headline": "Responsable des opérations",
+    "email": "elodie.martin@example.test",
+    "phone": "+33 1 55 01 02 03",
+    "location": "Lyon, France",
+    "website": { "url": "https://elodie.example.test", "label": "Portfolio" },
+    "customFields": []
+  },
+  "summary": {
+    "title": "Profil",
+    "columns": 1,
+    "hidden": false,
+    "content": "<p>Responsable des opérations avec une expérience internationale dans la coordination d'équipes et l'amélioration des processus.</p>"
+  },
+  "sections": {
+    "experience": {
+      "title": "Expérience professionnelle",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000401", "hidden": false, "company": "Atelier Lumière", "position": "Responsable des opérations", "location": "Lyon, France", "period": "2021 - Présent", "website": { "url": "https://atelier.example.test", "label": "" }, "description": "<ul><li>Coordonne une équipe de 12 personnes.</li><li>Réduit le délai de traitement de 22 % grâce à une nouvelle méthode de planification.</li></ul>" },
+        { "id": "018f2f40-6e5a-7000-8000-000000000402", "hidden": true, "company": "Maison du Rhône", "position": "Coordinatrice", "location": "Lyon, France", "period": "2017 - 2021", "website": { "url": "", "label": "" }, "description": "<p>Hidden historical item retained to test visibility controls.</p>" }
+      ]
+    },
+    "education": {
+      "title": "Formation",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000403", "hidden": false, "school": "Université Lumière Lyon 2", "degree": "Master", "area": "Gestion des organisations", "grade": "Très bien", "location": "Lyon, France", "period": "2015 - 2017", "website": { "url": "", "label": "" }, "description": "" }
+      ]
+    },
+    "languages": {
+      "title": "Langues",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000404", "hidden": false, "language": "Français", "fluency": "Langue maternelle", "level": 5 },
+        { "id": "018f2f40-6e5a-7000-8000-000000000405", "hidden": false, "language": "English", "fluency": "Fluent", "level": 4 },
+        { "id": "018f2f40-6e5a-7000-8000-000000000406", "hidden": false, "language": "日本語", "fluency": "Débutant", "level": 1 }
+      ]
+    },
+    "skills": {
+      "title": "Compétences",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000407", "hidden": false, "icon": "", "name": "Gestion de projet", "proficiency": "Expert", "level": 5, "keywords": ["Planification", "Coordination", "Amélioration continue"] }
+      ]
+    }
+  },
+  "customSections": [],
+  "metadata": {
+    "template": "bronzor",
+    "layout": {
+      "sidebarWidth": 30,
+      "pages": [
+        { "fullWidth": false, "main": ["summary", "experience", "education"], "sidebar": ["skills", "languages"] }
+      ]
+    },
+    "css": { "enabled": false, "value": "" },
+    "page": { "gapX": 5, "gapY": 6, "marginX": 15, "marginY": 13, "format": "letter", "locale": "fr-FR", "hideIcons": true },
+    "design": {
+      "colors": { "primary": "rgba(190, 24, 93, 1)", "text": "rgba(31, 41, 55, 1)", "background": "rgba(255, 255, 255, 1)" },
+      "level": { "icon": "circle", "type": "hidden" }
+    },
+    "typography": {
+      "body": { "fontFamily": "Noto Sans", "fontWeights": ["400"], "fontSize": 10, "lineHeight": 1.5 },
+      "heading": { "fontFamily": "Noto Sans", "fontWeights": ["600"], "fontSize": 14, "lineHeight": 1.4 }
+    },
+    "notes": "Multilingual fixture with accented, CJK, and hidden content."
+  }
+}

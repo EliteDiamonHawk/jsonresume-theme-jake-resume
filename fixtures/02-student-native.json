@@ -1,0 +1,123 @@
+{
+  "picture": {
+    "hidden": false,
+    "url": "https://images.example.test/omar-reed.jpg",
+    "size": 92,
+    "rotation": 0,
+    "aspectRatio": 1,
+    "borderRadius": 46,
+    "borderColor": "rgba(124, 58, 237, 1)",
+    "borderWidth": 2,
+    "shadowColor": "rgba(0, 0, 0, 0.25)",
+    "shadowWidth": 4
+  },
+  "basics": {
+    "name": "Omar Reed",
+    "headline": "Senior Product Manager",
+    "email": "omar.reed@example.test",
+    "phone": "+1 555 010 0815",
+    "location": "New York, NY",
+    "website": { "url": "https://omar.example.test", "label": "Website" },
+    "customFields": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000201", "icon": "map-pin", "name": "Work authorization", "value": "Authorized to work in the United States" }
+    ]
+  },
+  "summary": {
+    "title": "Summary",
+    "columns": 1,
+    "hidden": false,
+    "content": "<p>Product leader who turns ambiguous customer problems into focused roadmaps, measurable experiments, and products people return to.</p>"
+  },
+  "sections": {
+    "profiles": {
+      "title": "Profiles",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000202", "hidden": false, "icon": "linkedin-logo", "network": "LinkedIn", "username": "omar-reed", "website": { "url": "https://linkedin.example.test/in/omar-reed", "label": "" } },
+        { "id": "018f2f40-6e5a-7000-8000-000000000203", "hidden": false, "icon": "globe", "network": "Product blog", "username": "omar-reed", "website": { "url": "https://blog.example.test/omar", "label": "" } }
+      ]
+    },
+    "experience": {
+      "title": "Experience",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        {
+          "id": "018f2f40-6e5a-7000-8000-000000000204",
+          "hidden": false,
+          "company": "Northstar Commerce",
+          "position": "Senior Product Manager",
+          "location": "New York, NY",
+          "period": "2022 - Present",
+          "website": { "url": "https://northstar.example.test", "label": "" },
+          "description": "<ul><li>Led the checkout and retention roadmap for a multi-sided marketplace.</li><li>Improved first-purchase conversion by 18% through pricing and onboarding experiments.</li></ul>"
+        },
+        {
+          "id": "018f2f40-6e5a-7000-8000-000000000205",
+          "hidden": false,
+          "company": "Civic Signal",
+          "position": "Product Manager",
+          "location": "Brooklyn, NY",
+          "period": "2018 - 2022",
+          "website": { "url": "https://civicsignal.example.test", "label": "" },
+          "description": "<p>Owned discovery, prioritization, and launch planning for public-interest data products.</p>"
+        }
+      ]
+    },
+    "education": {
+      "title": "Education",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000206", "hidden": false, "school": "Queens College", "degree": "Bachelor of Arts", "area": "Economics", "grade": "3.6 GPA", "location": "Queens, NY", "period": "2014 - 2018", "website": { "url": "", "label": "" }, "description": "" }
+      ]
+    },
+    "skills": {
+      "title": "Skills",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000207", "hidden": false, "icon": "", "name": "Product strategy", "proficiency": "Expert", "level": 5, "keywords": ["Roadmaps", "Discovery", "Experimentation"] },
+        { "id": "018f2f40-6e5a-7000-8000-000000000208", "hidden": false, "icon": "", "name": "Collaboration", "proficiency": "Advanced", "level": 4, "keywords": ["Facilitation", "Writing", "Stakeholder alignment"] }
+      ]
+    },
+    "certifications": {
+      "title": "Certifications",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000209", "hidden": false, "title": "Certified Scrum Product Owner", "issuer": "Scrum Alliance", "date": "2021", "website": { "url": "https://certs.example.test/cspo/omar", "label": "Verify" }, "description": "" }
+      ]
+    },
+    "interests": {
+      "title": "Interests",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        { "id": "018f2f40-6e5a-7000-8000-000000000210", "hidden": false, "icon": "", "name": "Street photography", "keywords": ["Film", "Architecture"] }
+      ]
+    }
+  },
+  "customSections": [],
+  "metadata": {
+    "template": "gengar",
+    "layout": {
+      "sidebarWidth": 34,
+      "pages": [
+        { "fullWidth": false, "main": ["profiles", "summary", "experience", "education"], "sidebar": ["skills", "certifications", "interests"] }
+      ]
+    },
+    "css": { "enabled": true, "value": ".resume { letter-spacing: 0.01em; }" },
+    "page": { "gapX": 6, "gapY": 8, "marginX": 15, "marginY": 13, "format": "a4", "locale": "en-US", "hideIcons": false },
+    "design": {
+      "colors": { "primary": "rgba(124, 58, 237, 1)", "text": "rgba(31, 41, 55, 1)", "background": "rgba(255, 255, 255, 1)" },
+      "level": { "icon": "star", "type": "circle" }
+    },
+    "typography": {
+      "body": { "fontFamily": "Source Sans 3", "fontWeights": ["400", "500"], "fontSize": 10, "lineHeight": 1.5 },
+      "heading": { "fontFamily": "Source Sans 3", "fontWeights": ["600", "700"], "fontSize": 15, "lineHeight": 1.4 }
+    },
+    "notes": "Experienced professional fixture with optional CSS enabled."
+  }
+}

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jake-resume"
+version = "2.0.0"
+description = "CLI JSON Resume to Jake's Resume converter"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "EliteDiamonHawk" }]
+dependencies = ["PyMuPDF>=1.24"]
+
+[project.scripts]
+jake-resume = "jake_resume.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["jake_resume*"]
+
+[tool.setuptools.package-dir]
+"" = "src"

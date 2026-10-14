@@ -1,0 +1,52 @@
+{
+  "basics": {
+    "name": "Theo Nguyen",
+    "label": "Freelance Illustrator",
+    "email": "theo.nguyen@example.test",
+    "phone": "+1 555 010 0670",
+    "summary": "Illustrator creating editorial, packaging, and visual identity work for small brands."
+  },
+  "work": [
+    {
+      "name": "Independent Practice",
+      "position": "Freelance Illustrator",
+      "startDate": "2019-01",
+      "summary": "Work across editorial illustration, packaging, and campaign art direction.",
+      "highlights": [
+        "Delivered more than 60 commissioned illustrations",
+        "Built repeat partnerships with food, publishing, and cultural clients"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Illustration",
+      "keywords": ["Editorial", "Packaging", "Storyboarding"]
+    }
+  ],
+  "customSections": [
+    {
+      "title": "Selected Clients",
+      "items": [
+        {
+          "name": "Juniper Press",
+          "role": "Cover illustrator",
+          "year": 2025
+        },
+        {
+          "name": "Small Good Foods",
+          "role": "Packaging illustrator",
+          "year": 2024
+        }
+      ]
+    },
+    {
+      "title": "Tools and Materials",
+      "items": ["Procreate", "Adobe Illustrator", "Gouache", "Risograph"]
+    }
+  ],
+  "meta": {
+    "lastModified": "2026-03-03",
+    "customRendererHint": "compact-portfolio"
+  }
+}

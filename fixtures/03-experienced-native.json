@@ -1,0 +1,93 @@
+{
+  "picture": {
+    "hidden": false,
+    "url": "https://images.example.test/linh-tran.png",
+    "size": 84,
+    "rotation": 0,
+    "aspectRatio": 1,
+    "borderRadius": 18,
+    "borderColor": "rgba(5, 150, 105, 1)",
+    "borderWidth": 2,
+    "shadowColor": "rgba(0, 0, 0, 0.2)",
+    "shadowWidth": 3
+  },
+  "basics": {
+    "name": "Linh Tran",
+    "headline": "Research Scientist",
+    "email": "linh.tran@example.test",
+    "phone": "+1 555 010 0920",
+    "location": "Boston, MA",
+    "website": { "url": "https://linh.example.test", "label": "Research site" },
+    "customFields": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000301", "icon": "calendar", "name": "Availability", "value": "Open to research and applied science roles" }
+    ]
+  },
+  "summary": {
+    "title": "Research Profile",
+    "columns": 1,
+    "hidden": false,
+    "content": "<p>Research scientist specializing in human-centered machine learning, evaluation design, and translating complex findings into practical decisions.</p>"
+  },
+  "sections": {
+    "profiles": { "title": "Profiles", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000302", "hidden": false, "icon": "globe", "network": "Website", "username": "linh-tran", "website": { "url": "https://linh.example.test", "label": "" } }
+    ] },
+    "experience": { "title": "Experience", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000303", "hidden": false, "company": "Brightwater Institute", "position": "Research Scientist", "location": "Boston, MA", "period": "2023 - Present", "website": { "url": "https://brightwater.example.test", "label": "" }, "description": "<ul><li>Design evaluations for human-centered AI systems.</li><li>Partner with engineers and policy researchers to communicate uncertainty.</li></ul>" },
+      { "id": "018f2f40-6e5a-7000-8000-000000000304", "hidden": false, "company": "Common Ground Lab", "position": "Research Associate", "location": "Cambridge, MA", "period": "2020 - 2023", "website": { "url": "https://cglab.example.test", "label": "" }, "description": "<p>Conducted mixed-method research on collaborative decision-making tools.</p>" }
+    ] },
+    "education": { "title": "Education", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000305", "hidden": false, "school": "Northeastern University", "degree": "PhD", "area": "Information Science", "grade": "Distinction", "location": "Boston, MA", "period": "2015 - 2020", "website": { "url": "https://neu.example.test", "label": "" }, "description": "<p>Dissertation: Trust calibration in collaborative decision-support systems.</p>" }
+    ] },
+    "projects": { "title": "Projects", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000306", "hidden": false, "name": "Evidence Atlas", "period": "2024 - Present", "website": { "url": "https://atlas.example.test", "label": "Project" }, "description": "<p>An open toolkit for comparing evidence quality across rapidly changing research areas.</p>" }
+    ] },
+    "skills": { "title": "Methods", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000307", "hidden": false, "icon": "", "name": "Research methods", "proficiency": "Expert", "level": 5, "keywords": ["Experiment design", "Interviews", "Survey research"] },
+      { "id": "018f2f40-6e5a-7000-8000-000000000308", "hidden": false, "icon": "", "name": "Technical", "proficiency": "Advanced", "level": 4, "keywords": ["Python", "R", "SQL"] }
+    ] },
+    "languages": { "title": "Languages", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000309", "hidden": false, "language": "English", "fluency": "Fluent", "level": 5 },
+      { "id": "018f2f40-6e5a-7000-8000-000000000310", "hidden": false, "language": "Vietnamese", "fluency": "Native", "level": 5 }
+    ] },
+    "interests": { "title": "Interests", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000311", "hidden": false, "icon": "", "name": "Community science", "keywords": ["Public workshops", "Open data"] }
+    ] },
+    "awards": { "title": "Awards", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000312", "hidden": false, "title": "Emerging Scholar Award", "awarder": "Association for Collaborative Research", "date": "2021", "website": { "url": "", "label": "" }, "description": "Recognized for research on transparent decision-support tools." }
+    ] },
+    "certifications": { "title": "Certifications", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000313", "hidden": false, "title": "Human Subjects Research Certification", "issuer": "Research Ethics Board", "date": "2023", "website": { "url": "", "label": "" }, "description": "" }
+    ] },
+    "publications": { "title": "Publications", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000314", "hidden": false, "title": "When Explanations Change Decisions", "publisher": "Journal of Human-Centered Systems", "date": "2024", "website": { "url": "https://doi.example.test/10.0000/explanations", "label": "DOI" }, "description": "<p>Study of explanation formats in collaborative decision-support tools.</p>" }
+    ] },
+    "volunteer": { "title": "Volunteer", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000315", "hidden": false, "organization": "Boston Science Festival", "location": "Boston, MA", "period": "2021 - Present", "website": { "url": "https://sciencefest.example.test", "label": "" }, "description": "<p>Lead public workshops on evaluating evidence and communicating uncertainty.</p>" }
+    ] },
+    "references": { "title": "References", "columns": 1, "hidden": false, "items": [
+      { "id": "018f2f40-6e5a-7000-8000-000000000316", "hidden": false, "name": "Dr. Mira Chen", "position": "Director at Brightwater Institute", "website": { "url": "https://brightwater.example.test/mira", "label": "Profile" }, "phone": "+1 555 010 0999", "description": "<p>Available upon request.</p>" }
+    ] }
+  },
+  "customSections": [],
+  "metadata": {
+    "template": "leafish",
+    "layout": {
+      "sidebarWidth": 36,
+      "pages": [
+        { "fullWidth": false, "main": ["profiles", "summary", "experience", "education", "projects", "publications"], "sidebar": ["skills", "languages", "certifications", "awards", "interests", "volunteer", "references"] }
+      ]
+    },
+    "css": { "enabled": false, "value": "" },
+    "page": { "gapX": 4, "gapY": 6, "marginX": 13, "marginY": 12, "format": "a4", "locale": "en-US", "hideIcons": false },
+    "design": {
+      "colors": { "primary": "rgba(5, 150, 105, 1)", "text": "rgba(17, 24, 39, 1)", "background": "rgba(255, 255, 255, 1)" },
+      "level": { "icon": "circle", "type": "rectangle-full" }
+    },
+    "typography": {
+      "body": { "fontFamily": "Noto Sans", "fontWeights": ["400", "500"], "fontSize": 10, "lineHeight": 1.5 },
+      "heading": { "fontFamily": "Noto Sans", "fontWeights": ["600", "700"], "fontSize": 14, "lineHeight": 1.4 }
+    },
+    "notes": "Full native fixture covering every built-in section."
+  }
+}
