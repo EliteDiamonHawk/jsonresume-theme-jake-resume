@@ -3,6 +3,7 @@ __pycache__/
 *.egg-info/
 .venv/
 .uv-cache/
+.uv-cache-local
 build/
 dist/
 .jake-resume-tmp/
