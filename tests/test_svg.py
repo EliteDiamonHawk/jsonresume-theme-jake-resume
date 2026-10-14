@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from contextlib import contextmanager
 from pathlib import Path
@@ -83,6 +84,21 @@ class SvgRendererTests(unittest.TestCase):
             self.assertIn("Resume page 1", html)
             self.assertIn("z-index: 2", html)
             self.assertNotIn("<img", html.lower())
+
+    def test_html_namespaces_svg_ids_for_each_page(self) -> None:
+        with workspace_tempdir() as root:
+            pdf = write_pdf(root / "resume.pdf", pages=2)
+            output = root / "resume.html"
+
+            render_html(pdf, output)
+            html = output.read_text(encoding="utf-8")
+            ids = re.findall(r'\bid="([^"]+)"', html)
+
+            self.assertTrue(any(identifier.startswith("page-1-") for identifier in ids))
+            self.assertTrue(any(identifier.startswith("page-2-") for identifier in ids))
+            self.assertEqual(len(ids), len(set(ids)))
+            self.assertIn('href="#page-1-', html)
+            self.assertIn('href="#page-2-', html)
 
     def test_html_text_layer_escapes_text_and_can_be_disabled(self) -> None:
         with workspace_tempdir() as root:

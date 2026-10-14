@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from html import escape
 from math import atan2, degrees, isfinite
@@ -127,6 +128,38 @@ def _strip_xml_prologue(svg: str) -> str:
     return value
 
 
+_SVG_ID = re.compile(r'(\bid\s*=\s*["\'])([^"\']+)(["\'])')
+_SVG_FRAGMENT = re.compile(r'((?:xlink:)?href\s*=\s*["\'])#([^"\']+)(["\'])')
+_SVG_URL_FRAGMENT = re.compile(r'(url\(\s*)#([^\)\s]+)(\s*\))')
+
+
+def _namespace_svg_ids(svg: str, page_number: int) -> str:
+    """Give inline SVG definitions page-local IDs.
+
+    PDF-to-SVG conversion commonly emits the same font and path IDs for every
+    page. Once those SVGs are embedded in one HTML document, fragment lookup
+    can resolve a later page's references against the first page's definitions.
+    """
+
+    identifiers = {match.group(2) for match in _SVG_ID.finditer(svg)}
+    if not identifiers:
+        return svg
+    prefix = f"page-{page_number}-"
+    replacements = {identifier: prefix + identifier for identifier in identifiers}
+
+    def replace_id(match: re.Match[str]) -> str:
+        return match.group(1) + replacements[match.group(2)] + match.group(3)
+
+    def replace_fragment(match: re.Match[str]) -> str:
+        identifier = match.group(2)
+        replacement = replacements.get(identifier, identifier)
+        return match.group(1) + "#" + replacement + match.group(3)
+
+    svg = _SVG_ID.sub(replace_id, svg)
+    svg = _SVG_FRAGMENT.sub(replace_fragment, svg)
+    return _SVG_URL_FRAGMENT.sub(replace_fragment, svg)
+
+
 def load_pdf_pages(pdf_path: str | Path) -> list[PageSvg]:
     library = _require_pymupdf()
     source = Path(pdf_path).resolve()
@@ -148,7 +181,10 @@ def load_pdf_pages(pdf_path: str | Path) -> list[PageSvg]:
             pages.append(
                 PageSvg(
                     number=index + 1,
-                    svg=_strip_xml_prologue(page.get_svg_image()),
+                    svg=_namespace_svg_ids(
+                        _strip_xml_prologue(page.get_svg_image()),
+                        index + 1,
+                    ),
                     width=width,
                     height=height,
                     links=_page_links(page, width, height),
