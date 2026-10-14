@@ -93,6 +93,8 @@ uv run jake-resume render resume.json `
 
 The HTML file embeds every SVG page. The browser stacks the pages vertically and lets you scroll through the document. PDF web, email, telephone, and FTP links remain clickable in the HTML wrapper.
 
+HTML output includes a selectable text layer by default, while preserving the SVG visual rendering. Pass `--no-text-selection` to omit that layer when a purely visual HTML output is preferred.
+
 Keep the intermediate LaTeX source when compiling another format:
 
 ```powershell

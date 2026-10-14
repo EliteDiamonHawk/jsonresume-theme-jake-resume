@@ -51,6 +51,25 @@ class FormatSelectionTests(unittest.TestCase):
         self.assertEqual(args.latex_output, Path("source.tex"))
         self.assertEqual(args.warnings, "error")
         self.assertEqual(args.censorship_file, Path("censorship.json"))
+        self.assertFalse(args.no_text_selection)
+
+    def test_no_text_selection_requires_html_output(self) -> None:
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            result = main(
+                [
+                    "render",
+                    "resume.json",
+                    "--format",
+                    "pdf",
+                    "--output",
+                    "build/resume.pdf",
+                    "--no-text-selection",
+                ]
+            )
+
+        self.assertEqual(result, 1)
+        self.assertIn("requires HTML output", stderr.getvalue())
 
     def test_format_lists_aliases_duplicates_and_all(self) -> None:
         self.assertEqual(_normalize_formats(["pdf,svg", "pdf"]), ["pdf", "svg"])

@@ -49,6 +49,7 @@ def _parser() -> argparse.ArgumentParser:
     render.add_argument("--tex-output", dest="latex_output", type=Path, help=argparse.SUPPRESS)
     render.add_argument("--warnings", "-w", choices=["show", "error"], default="show")
     render.add_argument("--censorship-file", "-c", type=Path)
+    render.add_argument("--no-text-selection", action="store_true", help="omit the selectable text layer from HTML output")
     return parser
 
 
@@ -120,6 +121,7 @@ def _write_formats(
     engine: str,
     latex_output: Path | None,
     expand: bool,
+    selectable_text: bool = True,
 ) -> list[Path]:
     latex = render_latex(resume)
     if len(formats) > 1 and latex_output is not None:
@@ -156,7 +158,7 @@ def _write_formats(
             if "svg" in formats:
                 write_svg_pages(pages, paths["svg"])
             if "html" in formats:
-                write_html_pages(pages, paths["html"])
+                write_html_pages(pages, paths["html"], selectable_text)
     finally:
         if temporary_pdf is not None:
             temporary_pdf.unlink(missing_ok=True)
@@ -172,6 +174,8 @@ def main(argv: list[str] | None = None) -> int:
             return _print_diagnostics(resume)
 
         formats = _normalize_formats(args.format) if args.command == "render" else None
+        if args.no_text_selection and "html" not in formats:
+            raise InputError("--no-text-selection requires HTML output.")
 
         if args.output_dir is not None:
             if args.censorship_file is None:
@@ -191,8 +195,8 @@ def main(argv: list[str] | None = None) -> int:
             args.output_dir.mkdir(parents=True, exist_ok=True)
             normal_output = args.output_dir / args.input.stem / args.input.stem
             censored_output = args.output_dir / f"{args.input.stem}-censored" / f"{args.input.stem}-censored"
-            normal_paths = _write_formats(normal, normal_output, formats, args.engine, None, True)
-            censored_paths = _write_formats(censored, censored_output, formats, args.engine, None, True)
+            normal_paths = _write_formats(normal, normal_output, formats, args.engine, None, True, not args.no_text_selection)
+            censored_paths = _write_formats(censored, censored_output, formats, args.engine, None, True, not args.no_text_selection)
             _print_diagnostics(normal, args.warnings)
             _print_diagnostics(censored, args.warnings)
             for path in (*normal_paths, *censored_paths):
@@ -203,7 +207,15 @@ def main(argv: list[str] | None = None) -> int:
         if args.warnings == "error" and resume.warnings:
             _print_diagnostics(resume, args.warnings)
             return 2
-        paths = _write_formats(resume, args.output, formats, args.engine, args.latex_output, len(formats) > 1)
+        paths = _write_formats(
+            resume,
+            args.output,
+            formats,
+            args.engine,
+            args.latex_output,
+            len(formats) > 1,
+            not args.no_text_selection,
+        )
         _print_diagnostics(resume, args.warnings)
         for path in paths:
             print(f"Wrote {path.resolve()}")

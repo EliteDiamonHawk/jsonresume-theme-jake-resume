@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from html import escape
+from math import atan2, degrees, isfinite
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -26,12 +27,23 @@ class _PageLink:
 
 
 @dataclass(frozen=True)
+class _TextSpan:
+    text: str
+    x: float
+    baseline: float
+    width: float
+    font_size: float
+    rotation: float
+
+
+@dataclass(frozen=True)
 class PageSvg:
     number: int
     svg: str
     width: float
     height: float
     links: tuple[_PageLink, ...]
+    text_spans: tuple[_TextSpan, ...] = ()
 
 
 def _require_pymupdf():
@@ -68,6 +80,46 @@ def _page_links(page, width: float, height: float) -> tuple[_PageLink, ...]:
     return tuple(links)
 
 
+def _text_spans(page) -> tuple[_TextSpan, ...]:
+    """Read ordered PDF text spans without making text extraction required."""
+
+    try:
+        blocks = page.get_text("dict", sort=True).get("blocks", ())
+    except Exception:
+        return ()
+
+    spans: list[_TextSpan] = []
+    for block in blocks:
+        if block.get("type") != 0:
+            continue
+        for line in block.get("lines", ()):
+            direction = line.get("dir", (1.0, 0.0))
+            try:
+                rotation = degrees(atan2(float(direction[1]), float(direction[0])))
+            except (IndexError, TypeError, ValueError):
+                rotation = 0.0
+            if not isfinite(rotation):
+                rotation = 0.0
+            for span in line.get("spans", ()):
+                text = str(span.get("text", ""))
+                bbox = span.get("bbox")
+                origin = span.get("origin")
+                size = span.get("size")
+                if not text or not bbox or not origin or size is None:
+                    continue
+                try:
+                    x = float(origin[0])
+                    baseline = float(origin[1])
+                    width = max(0.0, float(bbox[2]) - float(bbox[0]))
+                    font_size = float(size)
+                except (IndexError, TypeError, ValueError):
+                    continue
+                if not all(isfinite(value) for value in (x, baseline, width, font_size)) or font_size <= 0:
+                    continue
+                spans.append(_TextSpan(text, x, baseline, width, font_size, rotation))
+    return tuple(spans)
+
+
 def _strip_xml_prologue(svg: str) -> str:
     value = svg.strip()
     if value.startswith("<?xml") and "?>" in value:
@@ -100,6 +152,7 @@ def load_pdf_pages(pdf_path: str | Path) -> list[PageSvg]:
                     width=width,
                     height=height,
                     links=_page_links(page, width, height),
+                    text_spans=_text_spans(page),
                 )
             )
     except SvgRenderingError:
@@ -144,12 +197,34 @@ def _link_markup(page: PageSvg) -> str:
     return "".join(anchors)
 
 
-def _html_document(pages: list[PageSvg]) -> str:
+def _text_layer_markup(page: PageSvg) -> str:
+    if not page.text_spans:
+        return ""
+    text_markup = []
+    for span in page.text_spans:
+        attributes = (
+            f'x="{span.x:.6f}" y="{span.baseline:.6f}" '
+            f'font-size="{span.font_size:.6f}" '
+            f'textLength="{span.width:.6f}" lengthAdjust="spacingAndGlyphs"'
+        )
+        if span.rotation:
+            attributes += f' transform="rotate({span.rotation:.6f} {span.x:.6f} {span.baseline:.6f})"'
+        text_markup.append(f"<text {attributes}>{escape(span.text)}</text>")
+    return (
+        f'<svg class="text-layer" aria-hidden="true" focusable="false" xml:space="preserve" '
+        f'viewBox="0 0 {page.width:g} {page.height:g}" preserveAspectRatio="none">'
+        + "".join(text_markup)
+        + "</svg>"
+    )
+
+
+def _html_document(pages: list[PageSvg], selectable_text: bool = True) -> str:
     page_markup = []
     for page in pages:
+        text_layer = _text_layer_markup(page) if selectable_text else ""
         page_markup.append(
             f'<section class="resume-page" aria-label="Page {page.number}">'
-            f'<div class="resume-page-content">{page.svg}{_link_markup(page)}</div>'
+            f'<div class="resume-page-content">{page.svg}{text_layer}{_link_markup(page)}</div>'
             "</section>"
         )
 
@@ -193,10 +268,25 @@ def _html_document(pages: list[PageSvg]) -> str:
       width: 100%;
       height: auto;
     }
+    .resume-page-content > .text-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      user-select: text;
+    }
+    .text-layer text {
+      fill: transparent;
+      stroke: none;
+      pointer-events: all;
+      user-select: text;
+    }
     .pdf-link {
       position: absolute;
       display: block;
-      z-index: 1;
+      z-index: 2;
     }
     @media print {
       .resume-pages { gap: 0; padding: 0; }
@@ -214,18 +304,18 @@ def _html_document(pages: list[PageSvg]) -> str:
 """
 
 
-def render_html(pdf_path: str | Path, output_path: str | Path) -> Path:
+def render_html(pdf_path: str | Path, output_path: str | Path, selectable_text: bool = True) -> Path:
     """Write a self-contained, scrollable HTML wrapper for a PDF's pages."""
 
-    return write_html_pages(load_pdf_pages(pdf_path), output_path)
+    return write_html_pages(load_pdf_pages(pdf_path), output_path, selectable_text)
 
 
-def write_html_pages(pages: list[PageSvg], output_path: str | Path) -> Path:
+def write_html_pages(pages: list[PageSvg], output_path: str | Path, selectable_text: bool = True) -> Path:
     """Write a self-contained HTML wrapper from converted PDF pages."""
 
     output = Path(output_path).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(_html_document(pages), encoding="utf-8")
+    output.write_text(_html_document(pages, selectable_text), encoding="utf-8")
     return output
 
 

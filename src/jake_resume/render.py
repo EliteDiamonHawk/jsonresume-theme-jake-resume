@@ -79,8 +79,8 @@ def render_svg(pdf_path: str | Path, output_dir: str | Path) -> list[Path]:
     return _render_svg(pdf_path, output_dir)
 
 
-def render_html(pdf_path: str | Path, output_path: str | Path) -> Path:
-    return _render_html(pdf_path, output_path)
+def render_html(pdf_path: str | Path, output_path: str | Path, selectable_text: bool = True) -> Path:
+    return _render_html(pdf_path, output_path, selectable_text)
 
 
 def load_pdf_pages(pdf_path: str | Path) -> list[PageSvg]:
@@ -91,8 +91,8 @@ def write_svg_pages(pages: list[PageSvg], output_dir: str | Path) -> list[Path]:
     return _write_svg_pages(pages, output_dir)
 
 
-def write_html_pages(pages: list[PageSvg], output_path: str | Path) -> Path:
-    return _write_html_pages(pages, output_path)
+def write_html_pages(pages: list[PageSvg], output_path: str | Path, selectable_text: bool = True) -> Path:
+    return _write_html_pages(pages, output_path, selectable_text)
 
 
 def load_and_normalize(path: str | Path, input_format: str = "auto") -> NormalizedResume:

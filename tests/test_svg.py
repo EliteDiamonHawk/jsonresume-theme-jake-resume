@@ -46,6 +46,15 @@ def write_pdf(path: Path, pages: int = 1, with_link: bool = False) -> Path:
     return path
 
 
+def write_text_pdf(path: Path, text: str = "Resume page 1") -> Path:
+    document = pymupdf.open()
+    page = document.new_page(width=612, height=792)
+    page.insert_text((72, 72), text)
+    document.save(str(path))
+    document.close()
+    return path
+
+
 class SvgRendererTests(unittest.TestCase):
     def test_render_svg_writes_one_file_per_pdf_page(self) -> None:
         with workspace_tempdir() as root:
@@ -70,7 +79,26 @@ class SvgRendererTests(unittest.TestCase):
             self.assertIn("overflow-y: auto", html)
             self.assertIn('href="https://example.com/profile"', html)
             self.assertIn('class="pdf-link"', html)
+            self.assertEqual(html.count('class="text-layer"'), 2)
+            self.assertIn("Resume page 1", html)
+            self.assertIn("z-index: 2", html)
             self.assertNotIn("<img", html.lower())
+
+    def test_html_text_layer_escapes_text_and_can_be_disabled(self) -> None:
+        with workspace_tempdir() as root:
+            pdf = write_text_pdf(root / "resume.pdf", "A & <B>")
+            enabled = root / "enabled.html"
+            disabled = root / "disabled.html"
+
+            render_html(pdf, enabled)
+            render_html(pdf, disabled, selectable_text=False)
+
+            enabled_html = enabled.read_text(encoding="utf-8")
+            disabled_html = disabled.read_text(encoding="utf-8")
+            self.assertIn("A &amp; &lt;B&gt;", enabled_html)
+            self.assertNotIn("A & <B>", enabled_html)
+            self.assertNotIn('class="text-layer"', disabled_html)
+            self.assertIn("<svg", disabled_html)
 
     def test_invalid_and_empty_pdfs_raise_clear_errors(self) -> None:
         with workspace_tempdir() as root:
