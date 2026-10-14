@@ -151,6 +151,59 @@ class RendererTests(unittest.TestCase):
         self.assertIn(r"mailto:a_b@example.com", tex)
         self.assertIn(r"\resumeLink{mailto:a_b@example.com}", tex)
 
+    def test_engine_specific_preamble_guards(self) -> None:
+        tex = render_tex(normalize({"basics": {"name": "Engine Test"}}))
+
+        pdftex_start = tex.index(r"\ifPDFTeX")
+        glyph_mapping = tex.index(r"\input{glyphtounicode}")
+        pdftex_end = tex.index(r"\fi", glyph_mapping)
+        self.assertLess(pdftex_start, glyph_mapping)
+        self.assertLess(glyph_mapping, pdftex_end)
+
+        unicode_start = tex.index(r"\ifXeTeX")
+        self.assertLess(unicode_start, tex.index(r"\usepackage{xeCJK}"))
+        self.assertLess(unicode_start, tex.index(r"\setCJKmainfont{Noto Serif CJK JP}"))
+        self.assertIn(r"\usepackage{luatexja-fontspec}", tex)
+
+        unicode_mapping = tex.index(r"\pdfgentounicode=1")
+        self.assertGreater(tex.rfind(r"\ifPDFTeX", 0, unicode_mapping), pdftex_end)
+        self.assertLess(unicode_mapping, tex.index(r"\fi", unicode_mapping))
+
+    def _assert_cjk_compiles(self, engine: str) -> None:
+        if shutil.which(engine) is None:
+            self.skipTest(f"{engine} is not installed")
+
+        resume = normalize({"basics": {"name": "日本語"}, "notes": [{"value": "中文 한국어"}]})
+        output = ROOT / f".jake-resume-{engine}-test.pdf"
+        try:
+            try:
+                compile_pdf(render_tex(resume), output, engine)
+            except CompilationError as exc:
+                message = str(exc).lower()
+                unavailable = (
+                    "fontspec.sty" in message
+                    or "xecjk.sty" in message
+                    or "luatexja-fontspec.sty" in message
+                    or "noto serif cjk jp" in message
+                    or "font-not-found" in message
+                    or "access is denied" in message
+                    or "fontconfig initialization failed" in message
+                    or "windows api error 5" in message
+                )
+                if unavailable:
+                    self.skipTest(f"{engine} CJK dependencies are unavailable: {exc}")
+                raise
+            self.assertTrue(output.exists())
+            self.assertTrue(output.read_bytes().startswith(b"%PDF"))
+        finally:
+            output.unlink(missing_ok=True)
+
+    def test_pdf_compiles_with_xelatex_and_cjk_text_when_available(self) -> None:
+        self._assert_cjk_compiles("xelatex")
+
+    def test_pdf_compiles_with_lualatex_and_cjk_text_when_available(self) -> None:
+        self._assert_cjk_compiles("lualatex")
+
     def test_pdf_compiles_when_pdflatex_is_available(self) -> None:
         if shutil.which("pdflatex") is None:
             self.skipTest("pdflatex is not installed")

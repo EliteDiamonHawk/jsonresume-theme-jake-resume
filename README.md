@@ -23,6 +23,17 @@ uv sync
 
 PDF, SVG, and HTML output require a LaTeX compiler. The CLI supports `pdflatex`, `xelatex`, and `lualatex`. Install MiKTeX or TeX Live and make the compiler available on `PATH`.
 
+The generated source is engine-aware. `pdflatex` uses its built-in glyph-to-Unicode mapping, while `xelatex` and `lualatex` use Unicode fonts. To render Japanese, Chinese, or Korean text with the Unicode engines, install the `fontspec`, `xeCJK`, and `luatexja-fontspec` packages and the `Noto Serif CJK JP` font. MiKTeX may offer to install the packages automatically; the font must be available to the TeX engine.
+
+For example, render PDF and HTML with LuaLaTeX:
+
+```powershell
+uv run jake-resume render fixtures\01-minimal-native.json `
+  --format pdf,html `
+  --engine lualatex `
+  --output build\01-minimal-native
+```
+
 ## Use
 
 Validate an input file:
