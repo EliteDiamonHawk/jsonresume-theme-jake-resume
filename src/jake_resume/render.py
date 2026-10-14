@@ -4,6 +4,7 @@ import json
 import os
 import shutil
 import subprocess
+import tempfile
 import uuid
 from pathlib import Path
 from typing import Any
@@ -34,13 +35,48 @@ def render_latex(resume: NormalizedResume) -> str:
 render_tex = render_latex
 
 
+def _create_scratch_root() -> Path:
+    """Create a private compiler workspace, preferring the system temp directory."""
+
+    try:
+        scratch_root = _new_scratch_root(Path(tempfile.gettempdir()))
+        if _scratch_root_is_writable(scratch_root):
+            return scratch_root
+        shutil.rmtree(scratch_root, ignore_errors=True)
+    except OSError:
+        pass
+
+    fallback_root = Path.cwd() / ".jake-resume-tmp"
+    fallback_root.mkdir(parents=True, exist_ok=True)
+    scratch_root = _new_scratch_root(fallback_root)
+    if not _scratch_root_is_writable(scratch_root):
+        shutil.rmtree(scratch_root, ignore_errors=True)
+        raise OSError(f"Unable to create a writable compiler workspace in {fallback_root}")
+    return scratch_root
+
+
+def _new_scratch_root(parent: Path) -> Path:
+    scratch_root = parent / f"jake-resume-{uuid.uuid4().hex}"
+    scratch_root.mkdir()
+    return scratch_root
+
+
+def _scratch_root_is_writable(scratch_root: Path) -> bool:
+    probe = scratch_root / ".write-test"
+    try:
+        probe.write_bytes(b"")
+        probe.unlink()
+        return True
+    except OSError:
+        return False
+
+
 def compile_pdf(tex: str, output_path: str | Path, engine: str = "pdflatex") -> Path:
     output = Path(output_path).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     if shutil.which(engine) is None:
         raise CompilationError(f"LaTeX compiler not found: {engine}")
-    scratch_root = Path.cwd() / ".jake-resume-tmp"
-    scratch_root.mkdir(parents=True, exist_ok=True)
+    scratch_root = _create_scratch_root()
     stem = f"resume-{uuid.uuid4().hex}"
     tex_path = scratch_root / f"{stem}.tex"
     tex_path.write_text(tex, encoding="utf-8")
@@ -66,12 +102,7 @@ def compile_pdf(tex: str, output_path: str | Path, engine: str = "pdflatex") -> 
             raise CompilationError(f"{engine} completed without producing a PDF.")
         output.write_bytes(pdf.read_bytes())
     finally:
-        for path in scratch_root.glob(f"{stem}.*"):
-            try:
-                path.unlink()
-            except OSError:
-                pass
-        shutil.rmtree(scratch_root / f"{stem}-miktex", ignore_errors=True)
+        shutil.rmtree(scratch_root, ignore_errors=True)
     return output
 
 

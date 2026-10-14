@@ -4,9 +4,10 @@ import json
 import shutil
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from jake_resume.adapters import normalize
-from jake_resume.render import CompilationError, compile_pdf
+from jake_resume.render import CompilationError, _create_scratch_root, compile_pdf
 from jake_resume.latex import render_latex as render_tex
 
 
@@ -14,6 +15,27 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class RendererTests(unittest.TestCase):
+    def test_scratch_root_prefers_system_temp_directory(self) -> None:
+        expected = Path("C:/system-temp/jake-resume-test")
+        with patch("jake_resume.render.tempfile.gettempdir", return_value="C:/system-temp"), patch(
+            "jake_resume.render._new_scratch_root", return_value=expected
+        ) as new_scratch_root, patch("jake_resume.render._scratch_root_is_writable", return_value=True):
+            scratch_root = _create_scratch_root()
+
+        self.assertEqual(scratch_root, expected)
+        new_scratch_root.assert_called_once_with(Path("C:/system-temp"))
+
+    def test_scratch_root_falls_back_to_current_directory(self) -> None:
+        fallback = ROOT / ".jake-resume-tmp" / "jake-resume-test"
+        with patch(
+            "jake_resume.render._new_scratch_root", side_effect=[OSError("system temp unavailable"), fallback]
+        ) as new_scratch_root, patch("jake_resume.render._scratch_root_is_writable", return_value=True):
+            scratch_root = _create_scratch_root()
+
+        self.assertEqual(scratch_root, fallback)
+        self.assertEqual(new_scratch_root.call_count, 2)
+        self.assertEqual(new_scratch_root.call_args_list[1].args[0], ROOT / ".jake-resume-tmp")
+
     def test_json_resume_creates_input_sections_and_preserves_unknown_fields(self) -> None:
         data = json.loads((ROOT / "examples" / "jsonresume.json").read_text(encoding="utf-8"))
         resume = normalize(data)
